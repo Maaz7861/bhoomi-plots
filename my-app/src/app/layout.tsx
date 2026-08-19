@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Bhoomi Plots & Land",
   description: "Real Estate in India",
+  icons: {
+    icon: "/assets/images/bhoomi-logo-white-1-1536x526.png",
+  },
 };
 
 export default function RootLayout({
