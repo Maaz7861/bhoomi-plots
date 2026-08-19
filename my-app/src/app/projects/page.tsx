@@ -35,14 +35,10 @@ export default function ProjectsPage() {
       <Navbar />
       <SocialPopup />
       
-      <main className="min-h-screen bg-slate-50 flex flex-col">
-        <div className="flex-grow flex flex-col">
-          <ProjectsHero />
-          <ProjectsTabs />
-        </div>
-        <div className="bg-white">
-          <ProjectsCTA />
-        </div>
+      <main className="min-h-screen bg-[var(--bg-main)]">
+        <ProjectsHero />
+        <ProjectsTabs />
+        <ProjectsCTA />
       </main>
 
       <AuthModals />

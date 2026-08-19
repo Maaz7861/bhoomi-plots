@@ -38,7 +38,7 @@ export default function AboutPage() {
       <Navbar />
       <SocialPopup />
       
-      <main className="min-h-screen bg-slate-50 flex flex-col">
+      <main className="min-h-screen">
         <AboutHero />
         <AboutIntro />
         <AboutVisionMission />

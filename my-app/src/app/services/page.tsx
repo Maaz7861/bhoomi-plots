@@ -37,7 +37,7 @@ export default function ServicesPage() {
       <Navbar />
       <SocialPopup />
       
-      <main className="min-h-screen bg-slate-50 flex flex-col">
+      <main className="min-h-screen">
         <ServicesHero />
         <ServicesTabs />
         <ServicesProcess />
