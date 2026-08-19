@@ -33,10 +33,10 @@ export function Navbar() {
             <i className="fas fa-chevron-down nav-caret text-[0.6rem] mt-[2px]"></i>
           </a>
           <div className="nav-dropdown absolute top-full left-0 py-[10px] rounded-lg min-w-[200px] opacity-0 pointer-events-none bg-[rgba(15,23,42,0.98)] shadow-[0_12px_30px_rgba(0,0,0,0.35)] translate-y-[6px] transition-all duration-150 ease-out group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0">
-            <a href="#" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">Sales</a>
-            <a href="#" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">Marketing &amp; Branding</a>
-            <a href="#" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">After Sales Services</a>
-            <a href="#" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">Project Analysis</a>
+            <a href="/services?tab=sales" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">Sales</a>
+            <a href="/services?tab=marketing" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">Marketing &amp; Branding</a>
+            <a href="/services?tab=after" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">After Sales Services</a>
+            <a href="/services?tab=analysis" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)]">Project Analysis</a>
           </div>
         </div>
 
