@@ -42,72 +42,99 @@ export function VideosFaq() {
   };
 
   return (
-    <section className="videos-faq-section py-[clamp(40px,5vw,64px)] px-[5%] bg-[var(--bg-light)]">
-      <div className="videos-faq-inner grid gap-8 max-w-[1100px] mx-auto items-start max-[900px]:grid-cols-1" style={{ gridTemplateColumns: '1fr 1.3fr' }}>
+    <section className="videos-faq-section py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-[var(--bg-light)] overflow-hidden">
+      <div className="videos-faq-inner grid gap-8 lg:gap-12 max-w-[1200px] mx-auto items-start grid-cols-1 lg:grid-cols-[1fr_1.2fr]">
         
         {/* Featured Video Column */}
-        <div className="videos-column relative flex flex-col items-center justify-center h-full min-h-[350px]">
-          {/* Decorative Background Blob */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary-soft)] to-transparent opacity-20 rounded-[24px] blur-xl -z-10 transform -rotate-3 scale-105"></div>
-          <div className="videos-column-bg absolute inset-0 rounded-[24px] -z-[1] opacity-80" style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', boxShadow: '0 15px 30px rgba(0,0,0,0.1)' }}></div>
+        <div className="videos-column relative w-full h-fit">
+          {/* Decorative Background Elements */}
+          <div className="absolute -inset-4 bg-gradient-to-br from-[var(--primary)]/10 to-transparent rounded-[32px] blur-2xl -z-10"></div>
           
-          <a href="https://youtu.be/RZm4x16zZF8?si=9tGPpaP46EYo5U7o" target="_blank" rel="noopener noreferrer" className="video-card block w-[90%] my-auto rounded-[16px] overflow-hidden bg-[var(--bg-dark)] border border-[rgba(255,255,255,0.1)] group/card transition-all duration-400 ease-out hover:-translate-y-2" style={{ boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)' }}>
-            <div className="video-thumb-wrap relative overflow-hidden bg-black/50" style={{ aspectRatio: '16/9' }}>
-              <img src="https://img.youtube.com/vi/RZm4x16zZF8/maxresdefault.jpg" alt="NA plots at Ambe Dindori (Ozar)" className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/card:scale-105 opacity-90 group-hover/card:opacity-100" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-60"></div>
+          <a 
+            href="https://youtu.be/RZm4x16zZF8?si=9tGPpaP46EYo5U7o" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="video-card relative block w-full rounded-[24px] overflow-hidden bg-black group/card transition-transform duration-500 hover:-translate-y-1 shadow-xl hover:shadow-2xl ring-1 ring-white/10"
+          >
+            <div className="video-thumb-wrap relative overflow-hidden bg-black/50 aspect-video">
+              <img 
+                src="https://img.youtube.com/vi/RZm4x16zZF8/maxresdefault.jpg" 
+                alt="NA plots at Ambe Dindori (Ozar)" 
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/card:scale-105 opacity-90 group-hover/card:opacity-100" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80"></div>
               
-              <span className="video-play-btn absolute inset-0 flex items-center justify-center text-white text-[1.8rem] transition-colors duration-300" aria-hidden="true">
-                <span className="relative flex h-14 w-14 items-center justify-center">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary)] opacity-40"></span>
-                  <i className="fas fa-play relative w-14 h-14 rounded-full flex items-center justify-center pl-[4px] bg-[rgba(197,138,35,0.95)] backdrop-blur-sm transition-transform duration-300 ease-out group-hover/card:scale-110 shadow-[0_0_20px_rgba(197,138,35,0.5)] text-white"></i>
-                </span>
-              </span>
+              {/* Refined Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center transition-all duration-300">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ease-out group-hover/card:scale-110 group-hover/card:bg-[var(--primary)] group-hover/card:border-[var(--primary)] group-hover/card:shadow-[0_0_40px_var(--primary)]">
+                  <i className="fas fa-play text-white text-xl md:text-2xl ml-1 md:ml-2 drop-shadow-md"></i>
+                </div>
+              </div>
             </div>
-            <div className="p-5 relative z-10 bg-gradient-to-b from-[#0f172a] to-[#0b1120]">
-              <span className="inline-block px-2 py-1 mb-2 text-[0.65rem] font-bold uppercase tracking-wider rounded-md bg-[rgba(197,138,35,0.15)] text-[var(--accent-strong)] border border-[rgba(197,138,35,0.3)]">Featured Project</span>
-              <h3 className="video-caption text-[1rem] font-bold text-[#fff] leading-snug group-hover/card:text-[var(--accent-strong)] transition-colors duration-300">NA plots at Ambe Dindori (Ozar)</h3>
-              <p className="text-[0.8rem] text-[var(--text-muted-light)] mt-2">Watch our detailed site visit and project overview video to learn more about the location and amenities.</p>
+            
+            <div className="p-6 md:p-8 relative z-10">
+              <div className="flex items-center mb-4">
+                <span className="px-3 py-1 text-[0.7rem] font-bold uppercase tracking-widest rounded-full bg-[var(--primary)]/10 text-[var(--primary)] border border-[var(--primary)]/20">Featured Project</span>
+              </div>
+              <h3 className="video-caption text-xl md:text-2xl font-bold text-white leading-tight group-hover/card:text-[var(--primary)] transition-colors duration-300">
+                NA plots at Ambe Dindori (Ozar)
+              </h3>
+              <p className="text-sm md:text-base text-slate-300 mt-2 line-clamp-2">
+                Watch our detailed site visit and project overview video to learn more about the location and amenities.
+              </p>
             </div>
           </a>
         </div>
 
-        {/* FAQ Column */}
-        <div className="faq-column flex flex-col">
-          <div className="mb-6">
-            <span className="faq-kicker inline-block px-3 py-1 rounded-full bg-[rgba(197,138,35,0.1)] uppercase text-[0.7rem] tracking-[0.1em] font-bold mb-3 text-[var(--primary)] border border-[rgba(197,138,35,0.2)]">Learn More From</span>
-            <h2 className="faq-title font-extrabold text-[var(--text-dark-strong)] leading-tight mb-2" style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)' }}>Frequently Asked Questions</h2>
-            <p className="text-[var(--text-body)] text-[0.9rem]">Have questions before investing? Find all the answers you need about our properties and buying process below.</p>
+        {/* FAQ Column - White Card Design as per Image */}
+        <div className="faq-column flex flex-col bg-white rounded-[2rem] p-6 sm:p-8 md:p-10 shadow-sm border border-black/[0.03] w-full">
+          <div className="mb-8 md:mb-10">
+            <span className="faq-kicker block uppercase text-[0.8rem] md:text-[0.85rem] tracking-[0.15em] font-bold mb-3 text-[#f5b041]">
+              Learn More From
+            </span>
+            <h2 className="faq-title font-extrabold text-[#0f172a] leading-tight text-3xl md:text-[2.2rem]">
+              Frequently Asked Questions
+            </h2>
           </div>
           
-          <div className="faq-accordion flex flex-col gap-3">
+          <div className="faq-accordion flex flex-col">
             {faqs.map((faq) => {
               const isOpen = openFaq === faq.id;
               return (
                 <div 
                   key={faq.id}
-                  className={`faq-item rounded-[12px] overflow-hidden bg-white border shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all duration-300 ease-out hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] ${isOpen ? 'is-open border-l-[3px] border-l-[var(--primary)] border-y-[rgba(0,0,0,0.05)] border-r-[rgba(0,0,0,0.05)] shadow-[0_6px_20px_rgba(0,0,0,0.06)]' : 'border-transparent'}`}
+                  className="faq-item border-b border-slate-200 last:border-none"
                 >
                   <button 
                     type="button" 
                     onClick={() => toggleFaq(faq.id)}
-                    className={`faq-question w-full flex justify-between items-center text-left px-5 py-4 font-bold text-[0.9rem] bg-transparent border-none cursor-pointer gap-4 transition-all duration-200 hover:bg-[var(--bg-light)] ${isOpen ? 'text-[var(--primary)]' : 'text-[var(--text-dark-strong)]'}`}
+                    className="w-full flex justify-between items-center text-left py-5 md:py-6 cursor-pointer gap-6 bg-transparent"
                     aria-expanded={isOpen} 
                     aria-controls={`faq-${faq.id}`}
                     id={`faq-q${faq.id}`}
                   >
-                    {faq.question}
-                    <span className={`faq-icon-wrap relative flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300 ease-out ${isOpen ? 'bg-[var(--primary)] text-white' : 'bg-[rgba(197,138,35,0.1)] text-[var(--primary)]'}`}>
-                      <i className={`fas fa-minus faq-icon absolute transition-all duration-300 ${isOpen ? 'opacity-100 rotate-180 scale-100' : 'opacity-0 scale-75'}`}></i>
-                      <i className={`fas fa-plus faq-icon absolute transition-all duration-300 ${isOpen ? 'opacity-0 scale-75' : 'opacity-100 scale-100'}`}></i>
+                    <span className="font-semibold text-base md:text-[1.1rem] leading-snug text-[#0f172a]">
+                      {faq.question}
+                    </span>
+                    <span className="flex-shrink-0 text-2xl font-light text-[#0ea5e9] flex items-center justify-center w-6 h-6">
+                      {isOpen ? '−' : '+'}
                     </span>
                   </button>
+                  
+                  {/* CSS Grid approach for smooth height animation */}
                   <div 
-                    className={`faq-answer px-5 pb-5 pt-0 text-[0.85rem] leading-relaxed text-[var(--text-body)] transition-all duration-300 origin-top ${isOpen ? 'block opacity-100 scale-y-100' : 'hidden opacity-0 scale-y-95'}`} 
+                    className={`grid transition-all duration-300 ease-in-out ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100 mb-6' : 'grid-rows-[0fr] opacity-0'
+                    }`} 
                     id={`faq-${faq.id}`} 
                     role="region" 
                     aria-labelledby={`faq-q${faq.id}`}
                   >
-                    <p>{faq.answer}</p>
+                    <div className="overflow-hidden">
+                      <div className="text-[0.95rem] md:text-base leading-relaxed text-slate-500 pr-4 md:pr-12">
+                        {faq.answer}
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
@@ -118,3 +145,4 @@ export function VideosFaq() {
     </section>
   );
 }
+
