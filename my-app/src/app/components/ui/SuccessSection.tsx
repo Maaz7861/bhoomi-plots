@@ -19,7 +19,7 @@ export function SuccessSection() {
         </div>
         <div className="success-stats grid gap-x-8 gap-y-6 grid-cols-2" style={{ flex: '1 1 320px' }}>
           <div className="success-stat flex flex-col rounded-[16px] bg-[rgba(255,255,255,0.05)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[8px] transition-all duration-300 ease-out hover:border-[rgba(245,197,75,0.4)] hover:bg-[rgba(245,197,75,0.06)]" style={{ padding: 'clamp(14px, 2vw, 22px)' }}>
-            <span className="success-stat-value font-bold leading-none mb-1 text-[var(--accent-strong)]" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }} data-value="8076">8,076</span>
+            <span className="success-stat-value font-bold leading-none mb-1 text-[var(--accent-strong)]" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }} data-value="10256">10,256</span>
             <span className="success-stat-label text-[0.82rem] font-medium uppercase tracking-wide text-[var(--text-muted-light)]">Property Buyer</span>
           </div>
           <div className="success-stat flex flex-col rounded-[16px] bg-[rgba(255,255,255,0.05)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[8px] transition-all duration-300 ease-out hover:border-[rgba(245,197,75,0.4)] hover:bg-[rgba(245,197,75,0.06)]" style={{ padding: 'clamp(14px, 2vw, 22px)' }}>
