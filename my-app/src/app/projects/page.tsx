@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 
 import { Navbar } from '../components/Navbar';
-import { SocialPopup } from '../components/SocialPopup';
 import { AuthModals } from '../components/AuthModals';
 import { Footer } from '../components/Footer';
 
@@ -33,9 +32,8 @@ export default function ProjectsPage() {
   return (
     <>
       <Navbar />
-      <SocialPopup />
       
-      <main className="min-h-screen bg-[var(--bg-main)]">
+      <main className="min-h-screen bg-slate-50 flex flex-col">
         <ProjectsHero />
         <ProjectsTabs />
         <ProjectsCTA />

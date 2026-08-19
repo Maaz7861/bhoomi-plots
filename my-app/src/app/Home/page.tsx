@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 
 import { Navbar } from '../components/Navbar';
-import { SocialPopup } from '../components/SocialPopup';
 import { AuthModals } from '../components/AuthModals';
 import { Footer } from '../components/Footer';
 import { Hero } from '../components/ui/Hero';
@@ -31,7 +30,8 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <SocialPopup />
+      
+      <main className="min-h-screen bg-slate-50">
       <Hero />
       <SuccessSection />
       <WhyChooseUs />
@@ -39,6 +39,7 @@ export default function HomePage() {
       <Testimonials />
       <VideosFaq />
       <AuthModals />
+      </main>
       <Footer />
     </>
   );

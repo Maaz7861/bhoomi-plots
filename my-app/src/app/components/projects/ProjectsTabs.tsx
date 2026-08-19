@@ -234,12 +234,12 @@ function ProjectsTabsContent() {
         <div className="w-full max-w-[1250px] mx-auto flex flex-col items-center">
           
           {/* Tab Buttons */}
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 w-full">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 w-full max-[900px]:flex-nowrap max-[900px]:justify-start max-[900px]:overflow-x-auto max-[900px]:pb-4 max-[900px]:pt-2 max-[900px]:snap-x max-[900px]:snap-mandatory scrollbar-hide">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as Tab)}
-                className={`px-8 py-3.5 rounded-full font-bold transition-all duration-300 tracking-wide text-[0.95rem] ${
+                className={`px-8 py-3.5 max-[900px]:shrink-0 max-[900px]:snap-center rounded-full font-bold transition-all duration-300 tracking-wide text-[0.95rem] ${
                   activeTab === tab.id 
                     ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary)]/30 -translate-y-1' 
                     : 'bg-white text-[var(--text-body)] border border-slate-200 hover:border-[var(--primary-soft)] hover:text-[var(--primary)] hover:shadow-md'
