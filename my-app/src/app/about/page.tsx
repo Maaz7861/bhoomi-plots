@@ -10,6 +10,7 @@ import { AboutHero } from '../components/about/AboutHero';
 import { AboutIntro } from '../components/about/AboutIntro';
 import { AboutVisionMission } from '../components/about/AboutVisionMission';
 import { AboutExperts } from '../components/about/AboutExperts';
+import { AboutLeadership } from '../components/about/AboutLeadership';
 import { AboutOffer } from '../components/about/AboutOffer';
 
 export default function AboutPage() {
@@ -38,6 +39,7 @@ export default function AboutPage() {
       
       <main className="min-h-screen bg-slate-50 flex flex-col">
         <AboutHero />
+        <AboutLeadership />
         <AboutIntro />
         <AboutVisionMission />
         <AboutExperts />
