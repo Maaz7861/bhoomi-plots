@@ -26,8 +26,8 @@ export function Testimonials() {
       <h2 className="testimonials-title relative z-[1] text-center font-bold mb-2 text-[var(--text-inverted)]" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)' }}>Testimonials</h2>
       <p className="testimonials-subtitle relative z-[1] text-center text-[0.9rem] mb-10 text-[var(--text-muted-light)]">What our clients say about us</p>
 
-      <div className="testimonials-carousel relative z-[1] flex items-center gap-4 max-w-[1200px] mx-auto max-[600px]:gap-2" aria-roledescription="carousel">
-        <button onClick={scrollPrev} type="button" className="testimonials-arrow testimonials-arrow-prev w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer bg-[rgba(255,255,255,0.08)] border border-[rgba(0,194,255,0.2)] text-[var(--text-muted-light)] transition-all duration-200 ease-out hover:bg-[rgba(0,194,255,0.2)] hover:text-[#fff] hover:scale-110" aria-label="Previous testimonials">
+      <div className="testimonials-carousel relative z-[1] flex items-center gap-4 max-w-[1200px] mx-auto max-[600px]:block max-[600px]:pb-14" aria-roledescription="carousel">
+        <button onClick={scrollPrev} type="button" className="testimonials-arrow testimonials-arrow-prev w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer bg-[rgba(255,255,255,0.08)] border border-[rgba(0,194,255,0.2)] text-[var(--text-muted-light)] transition-all duration-200 ease-out hover:bg-[rgba(0,194,255,0.2)] hover:text-[#fff] hover:scale-110 max-[600px]:absolute max-[600px]:bottom-0 max-[600px]:left-[calc(50%-50px)] max-[600px]:z-10" aria-label="Previous testimonials">
           <i className="fas fa-chevron-left" aria-hidden="true"></i>
         </button>
 
@@ -38,7 +38,7 @@ export function Testimonials() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {/* ORIGINAL VIDEO CARDS */}
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="video">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="video">
               <div className="testimonial-video-frame w-full rounded-[16px] overflow-hidden aspect-video bg-black/50 shadow-inner relative group">
                 <video className="w-full h-full object-cover" preload="metadata" controls playsInline>
                   <source src="assets/videos/testimonial-video/02.MP4" type="video/mp4" />
@@ -53,7 +53,7 @@ export function Testimonials() {
               </div>
             </div>
 
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="video">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="video">
               <div className="testimonial-video-frame w-full rounded-[16px] overflow-hidden aspect-video bg-black/50 shadow-inner relative group">
                 <video className="w-full h-full object-cover" preload="metadata" controls playsInline>
                   <source src="assets/videos/testimonial-video/01.MP4" type="video/mp4" />
@@ -69,7 +69,7 @@ export function Testimonials() {
             </div>
 
             {/* ORIGINAL TEXT CARDS */}
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"Bhoomi Plots helped us find the perfect plot for our dream home. Their team was transparent, professional and went the extra mile. Highly recommended."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -81,7 +81,7 @@ export function Testimonials() {
               </div>
             </div>
 
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"We invested in two plots through Bhoomi and the entire process was smooth. Accurate guidance and best quality documentation. Trust them for land deals."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -93,7 +93,7 @@ export function Testimonials() {
               </div>
             </div>
 
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"From consultation to registration, Bhoomi Plots and Lands gave us better options and solutions. Our family is now in a RERA-approved project. Thank you!"</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -105,7 +105,7 @@ export function Testimonials() {
               </div>
             </div>
             
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"The transparency and honesty of the Bhoomi team is unmatched. I got clear titles and proper guidance at every step. Truly the best real estate partner."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -118,7 +118,7 @@ export function Testimonials() {
             </div>
 
             {/* NEW ADDED CARDS IN ORIGINAL FORMAT */}
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"Bhoomi Plots helped us find the perfect plot for our dream home. Their team was transparent, professional and went the extra mile. Highly recommended."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -130,7 +130,7 @@ export function Testimonials() {
               </div>
             </div>
 
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"We invested in two plots through Bhoomi and the entire process was smooth. Accurate guidance and best quality documentation. Trust them for land deals."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -142,7 +142,7 @@ export function Testimonials() {
               </div>
             </div>
 
-            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-full rounded-[24px] p-6 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
+            <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
               <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"From consultation to registration, Bhoomi Plots and Lands gave us better options and solutions. Our family is now in a RERA-approved project. Thank you!"</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
@@ -157,7 +157,7 @@ export function Testimonials() {
           </div>
         </div>
 
-        <button onClick={scrollNext} type="button" className="testimonials-arrow testimonials-arrow-next w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer bg-[rgba(255,255,255,0.08)] border border-[rgba(0,194,255,0.2)] text-[var(--text-muted-light)] transition-all duration-200 ease-out hover:bg-[rgba(0,194,255,0.2)] hover:text-[#fff] hover:scale-110" aria-label="Next testimonials">
+        <button onClick={scrollNext} type="button" className="testimonials-arrow testimonials-arrow-next w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 cursor-pointer bg-[rgba(255,255,255,0.08)] border border-[rgba(0,194,255,0.2)] text-[var(--text-muted-light)] transition-all duration-200 ease-out hover:bg-[rgba(0,194,255,0.2)] hover:text-[#fff] hover:scale-110 max-[600px]:absolute max-[600px]:bottom-0 max-[600px]:right-[calc(50%-50px)] max-[600px]:z-10" aria-label="Next testimonials">
           <i className="fas fa-chevron-right" aria-hidden="true"></i>
         </button>
       </div>
