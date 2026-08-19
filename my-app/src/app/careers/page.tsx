@@ -6,30 +6,24 @@ import { SocialPopup } from '../components/SocialPopup';
 import { AuthModals } from '../components/AuthModals';
 import { Footer } from '../components/Footer';
 
-// About Page Specific Components
-import { AboutHero } from '../components/about/AboutHero';
-import { AboutIntro } from '../components/about/AboutIntro';
-import { AboutVisionMission } from '../components/about/AboutVisionMission';
-import { AboutExperts } from '../components/about/AboutExperts';
-import { AboutOffer } from '../components/about/AboutOffer';
+// Career Page Specific Components
+import { CareerHero } from '../components/career/CareerHero';
+import { CareerPerks } from '../components/career/CareerPerks';
+import { CareerOpenings } from '../components/career/CareerOpenings';
+import { CareerForm } from '../components/career/CareerForm';
 
-export default function AboutPage() {
+export default function CareerPage() {
   useEffect(() => {
     // Load original script.js to preserve interactive behaviour
-    // like navbar toggle and social popup.
     const script = document.createElement('script');
     script.src = '/assets/js/script.js';
     script.async = true;
     document.body.appendChild(script);
 
-    // Add page-specific body class for any remaining global styles
-    document.body.classList.add('about-page');
-
     return () => {
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
-      document.body.classList.remove('about-page');
     };
   }, []);
 
@@ -39,11 +33,10 @@ export default function AboutPage() {
       <SocialPopup />
       
       <main className="min-h-screen bg-slate-50 flex flex-col">
-        <AboutHero />
-        <AboutIntro />
-        <AboutVisionMission />
-        <AboutExperts />
-        <AboutOffer />
+        <CareerHero />
+        <CareerPerks />
+        <CareerOpenings />
+        <CareerForm />
       </main>
 
       <AuthModals />

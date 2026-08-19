@@ -22,9 +22,9 @@
   --text-inverted: #f8fafc;
   --text-slate: #64748b;
 
-  --bg-light: #f9f5ef;
-  --bg-light-soft: #f3e7d8;
-  --bg-page-alt: #f5ede0;
+  --bg-light: #f8fafc;
+  --bg-light-soft: #f1f5f9;
+  --bg-page-alt: #ffffff;
   --bg-dark: #0b1120;
   --bg-darker: #0f172a;
   --bg-dark-alt: #1e293b;
@@ -50,8 +50,8 @@
   --border-subtle: #d1d5db;
   --border-subtle-alt: #f0f0f0;
 
-  --bg-page-gradient: linear-gradient(to bottom, #f9f5ef 0%, #f3e7d8 40%, #ffffff 100%);
-  --bg-page-gradient-alt: linear-gradient(to bottom, #f9f5ef 0%, #f0e0c5 40%, #ffffff 100%);
+  --bg-page-gradient: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 40%, #ffffff 100%);
+  --bg-page-gradient-alt: linear-gradient(to bottom, #f8fafc 0%, #e2e8f0 40%, #ffffff 100%);
   --bg-navbar: #0f172add;
 }
 

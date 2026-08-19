@@ -77,7 +77,7 @@ export function GalleryGrid() {
   }, [selectedImage]);
 
   return (
-    <section className="px-[5%] md:px-[8%] pb-24 bg-white relative">
+    <section className="pt-8 md:pt-12 px-[5%] md:px-[8%] pb-24 relative">
       <div className="max-w-[1400px] mx-auto">
         
         {/* Filters */}
