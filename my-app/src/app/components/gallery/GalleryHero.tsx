@@ -1,6 +1,4 @@
-import React from 'react';
-
-export function ServicesHero() {
+export function GalleryHero() {
   return (
     <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-white">
       {/* Background abstract elements */}
@@ -9,16 +7,15 @@ export function ServicesHero() {
       
       <div className="relative z-10 max-w-[1100px] mx-auto text-center flex flex-col items-center px-[5%]">
         <span className="text-[#cfa861] text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 inline-block">
-          Bhoomi Plots & Land Services
+          Project Highlights
         </span>
         
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight max-w-[900px] bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600">
-          End‑to‑end support for <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#cfa861] to-amber-700">land and real estate</span> investments
+          Bhoomi Plots & Land Gallery
         </h1>
         
         <p className="text-lg md:text-xl text-slate-500 max-w-[700px] mx-auto leading-relaxed font-medium">
-          From first enquiry to registration and beyond, our specialised teams
-          help you make confident, future‑ready investment decisions.
+          Glimpses of our completed and ongoing NA plots, farm lands, and residential projects across Maharashtra and India.
         </p>
       </div>
     </section>
