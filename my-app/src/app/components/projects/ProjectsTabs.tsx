@@ -57,21 +57,6 @@ const projectsData: Record<Tab, Project[]> = {
       status: 'New Launch',
       reraNumber: 'P52100055443',
     },
-    {
-      id: 'p4',
-      image: '/projects/plot.jpg',
-      title: 'Heritage Parkland',
-      price: '₹ 85 Lakh',
-      subPrice: 'Premium Plots',
-      features: '3500 sq.ft • Gated Community',
-      description: 'Exclusive villa plots surrounded by lush greenery, complete with a luxury clubhouse and security.',
-      location: 'Lonavala, Maharashtra',
-      developer: 'Bhoomi Projects',
-      developerVerified: true,
-      status: 'Ready to Build',
-      reraNumber: 'P52100099887',
-      isFeatured: true,
-    }
   ],
   land: [
     {
@@ -172,40 +157,6 @@ const projectsData: Record<Tab, Project[]> = {
       reraNumber: 'P52100066778',
       isLiked: true,
     },
-    {
-      id: 'r4',
-      image: '/projects/residential.jpg',
-      gallery: [
-        '/projects/residential.jpg'
-      ],
-      title: 'Zen Estate',
-      price: '₹ 1.05 Cr',
-      subPrice: '₹ 95 Lakh Approx',
-      features: '2 Bds • 2 Ba • 895 sqft',
-      description: '2 BHK Flats for Sale – Premium Township in West Pune.',
-      location: 'Bavdhan, Pune',
-      developer: 'Zen Estate',
-      developerVerified: true,
-      status: 'RERA Approved',
-      reraNumber: 'P52100055667',
-      isFeatured: true,
-      hasVideo: true,
-    },
-    {
-      id: 'r5',
-      image: '/projects/residential.jpg',
-      title: 'The Parkville',
-      price: '₹ 2.4 Cr',
-      subPrice: '₹ 2.2 Cr Approx',
-      features: '4 Bds • 4 Ba • 2,100 sqft',
-      description: 'Ultra-luxury 4 BHK duplex apartments with private terrace and infinity pool access.',
-      location: 'Kalyani Nagar, Pune',
-      developer: 'Bhoomi Prime',
-      developerVerified: true,
-      status: 'New Launch',
-      reraNumber: 'P52100099001',
-      isFeatured: true,
-    }
   ],
   commercial: [
     {
