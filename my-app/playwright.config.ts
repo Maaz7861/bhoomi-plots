@@ -8,16 +8,18 @@ export default defineConfig({
   workers: 1,
   reporter: [['html', { open: 'never' }], ['line']],
 
-  use: {
-    baseURL: 'http://localhost:3000',
-    trace: 'retain-on-failure',
-    screenshot: 'only-on-failure',
-    // Visual snapshot settings
+  expect: {
     toHaveScreenshot: {
       maxDiffPixelRatio: 0.03,
       threshold: 0.2,
       animations: 'disabled',
     },
+  },
+
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
   },
 
   projects: [
