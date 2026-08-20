@@ -57,7 +57,7 @@ export function SocialPopup({ isOpen, onClose }: SocialPopupProps) {
         {/* Clean Header */}
         <div className="mb-10">
           <h3 className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">Connect with us</h3>
-          <p className="text-gray-500 text-[1rem]">Follow Bhoomi Plots &amp; Land across our networks</p>
+          <p className="text-gray-500 text-[1rem]">Follow Bhoomi Group across our networks</p>
         </div>
 
         {/* 7 Icons strictly in one horizontal line */}

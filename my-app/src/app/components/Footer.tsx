@@ -55,7 +55,7 @@ export function Footer() {
         </div>
       </div>
       <div className="footer-bottom flex flex-wrap gap-[10px] justify-between pt-[14px] text-[0.78rem] text-[var(--text-muted)]">
-        <span>&copy; 2025 Bhoomi Plots &amp; Land. All rights reserved.</span>
+        <span>&copy; 2025 Bhoomi Group. All rights reserved.</span>
         <span>Made with care for Indian real estate buyers.</span>
       </div>
     </footer>

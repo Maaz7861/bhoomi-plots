@@ -17,7 +17,7 @@ const leaders = [
           He began his career with renowned groups in Pune, including Paranjape Schemes (Construction) Ltd in 2009 and the Lodha Group in 2013, where he gained expertise in the luxurious and high-end segment, driving sales for iconic projects like Trump Tower and Lodha World Tower in Mumbai. In 2018, he joined Karda Construction, notably introducing India's First Investment Mela in the real estate sector.
         </p>
         <p>
-          In 2021, he established his own company, <strong>Bhoomi Plots & Land</strong>. Starting with just 3 partners, he has grown the company to an employee strength of over 135 skilled professionals. Under his leadership, the company has successfully delivered 4 projects, launched 50-60 projects, and is currently developing 22 Residential & Commercial projects in Nashik. Impressively, in the past 2 quarters alone, the company has successfully delivered 1,200 homes and 5 layouts to customers, backed by expert construction consultancy and cash flow management.
+          In 2021, he established his own company, <strong>Bhoomi Group</strong>. Starting with just 3 partners, he has grown the company to an employee strength of over 135 skilled professionals. Under his leadership, the company has successfully delivered 4 projects, launched 50-60 projects, and is currently developing 22 Residential &amp; Commercial projects in Nashik. Impressively, in the past 2 quarters alone, the company has successfully delivered 1,200 homes and 5 layouts to customers, backed by expert construction consultancy and cash flow management.
         </p>
       </>
     )

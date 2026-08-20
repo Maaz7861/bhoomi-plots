@@ -45,7 +45,7 @@ export function WhyChooseUs() {
             We Follow Best Practices.
           </h3>
           <p className="text-[0.85rem] md:text-[0.9rem] leading-relaxed mb-6 text-slate-500">
-            At Bhoomi Plots and Lands, we're committed to turning your real estate dreams into
+            At Bhoomi Group, we're committed to turning your real estate dreams into
             reality. Here's why we're the trusted choice for discerning buyers and investors.
           </p>
           

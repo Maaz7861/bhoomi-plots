@@ -7,8 +7,8 @@ import { BlogList } from '../components/blog/BlogList';
 import { BlogSidebar } from '../components/blog/BlogSidebar';
 
 export const metadata = {
-  title: 'Blog – Bhoomi Plots & Land',
-  description: 'Stay updated with land investment tips, project launches and learnings from the Bhoomi Plots & Land team.',
+  title: 'Blog – Bhoomi Group',
+  description: 'Stay updated with land investment tips, project launches and learnings from the Bhoomi Group team.',
 };
 
 export default function BlogPage() {

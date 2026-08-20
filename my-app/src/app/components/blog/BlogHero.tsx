@@ -18,7 +18,7 @@ export function BlogHero() {
         
         <p className="text-[0.95rem] md:text-[1.05rem] text-[var(--text-body-muted)] leading-relaxed max-w-[600px]">
           Stay updated with land investment tips, project launches and
-          learnings from the Bhoomi Plots &amp; Land team.
+          learnings from the Bhoomi Group team.
         </p>
       </div>
     </header>

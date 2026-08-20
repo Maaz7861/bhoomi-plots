@@ -6,7 +6,7 @@ export function AuthModals() {
       <div className="auth-modal relative w-[90%] max-w-[440px] rounded-[24px] hidden opacity-0 scale-95 bg-[var(--bg-dark)] border border-[rgba(0,194,255,0.15)] transition-all duration-300 ease-out [&.active]:block [&.active]:opacity-100 [&.active]:scale-100" style={{ padding: 'clamp(24px, 4vw, 40px)', boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)' }} id="loginModal">
         <button className="auth-close absolute top-4 right-5 bg-transparent border-none text-[1.8rem] cursor-pointer text-[var(--text-muted-light)] transition-colors duration-200 hover:text-[var(--accent-strong)]" data-auth-close>&times;</button>
         <h2 className="font-bold mb-1 text-[1.6rem] text-[var(--text-inverted)]">Login</h2>
-        <p className="auth-subtitle text-[0.88rem] mb-6 text-[var(--text-muted-light)]">Welcome back to Bhoomi Plots and Land</p>
+        <p className="auth-subtitle text-[0.88rem] mb-6 text-[var(--text-muted-light)]">Welcome back to Bhoomi Group</p>
         <form className="auth-form flex flex-col gap-4 [&_label]:flex [&_label]:flex-col [&_label]:text-[0.82rem] [&_label]:font-semibold [&_label]:tracking-wide [&_label]:uppercase [&_label]:gap-2 [&_label]:text-[var(--text-soft)]">
           <label>
             Email or Mobile

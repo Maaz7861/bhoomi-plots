@@ -11,7 +11,7 @@ export function AboutExperts() {
         
         <div className="text-[0.95rem] leading-relaxed text-[var(--text-body-muted)] flex flex-col gap-4 w-full">
           <p>
-            The team at Bhoomi Plots and Land strives to be the best agency out
+            The team at Bhoomi Group strives to be the best agency out
             there—both in agent support and customer experience. Our experts stay
             on top of the latest regulations, RERA compliance and technology so
             that our clients can enjoy a smooth and confident buying journey.

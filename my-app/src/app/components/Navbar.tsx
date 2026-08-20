@@ -27,7 +27,7 @@ export function Navbar() {
         <div>
           <img
             src="assets/images/bhoomi-logo-white-1-1536x526.png"
-            alt="Bhoomi Plots and Land"
+            alt="Bhoomi Group"
             style={{ height: '55px', width: 'auto', background: '#0f172add', borderRadius: '55px', padding: '0 12px' }}
           />
         </div>

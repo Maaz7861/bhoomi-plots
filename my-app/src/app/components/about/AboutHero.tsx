@@ -10,7 +10,7 @@ export function AboutHero() {
       <div className="relative max-w-3xl z-[1] mx-auto text-center flex flex-col items-center">
         <div className="inline-flex items-center justify-center px-4 py-1.5 mb-6 rounded-full bg-[var(--primary)]/10 border border-[var(--primary)]/20 shadow-sm backdrop-blur-sm">
           <span className="uppercase tracking-[0.2em] text-[0.65rem] md:text-[0.7rem] text-[var(--primary-hover)] font-black">
-            About Bhoomi Plots &amp; Land
+            About Bhoomi Group
           </span>
         </div>
         
