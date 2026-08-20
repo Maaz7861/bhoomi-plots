@@ -17,7 +17,7 @@ export function ContactInfo() {
           <div>
             <h3 className="text-[0.65rem] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Address</h3>
             <p className="text-[var(--text-dark-strong)] text-[0.8rem] font-medium leading-snug">
-              Shree Hari Krishna Complex, Shop 13 &amp; 14, Old Adgaon Naka, Panchavati, Nashik, MH 422009
+              Shree Hari Krishna Complex, Shop 13 &amp; 14, Old Adgaon Naka, Panchavati, Nashik, MH 422003
             </p>
           </div>
         </div>
@@ -34,7 +34,7 @@ export function ContactInfo() {
             </p>
           </div>
         </div>
-        
+
         {/* Email */}
         <div className="group bg-[var(--bg-light)] px-4 py-3 rounded-xl border border-[var(--border-subtle-alt)] hover:shadow-sm transition-all hover:border-[var(--primary)]/30 flex items-center gap-3.5">
           <div className="w-10 h-10 rounded-full bg-[var(--primary)]/10 flex items-center justify-center shrink-0 group-hover:bg-[var(--primary)] group-hover:text-white transition-colors">
