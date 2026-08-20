@@ -28,7 +28,7 @@ export function Navbar() {
           <img
             src="assets/images/bhoomi-logo-white-1-1536x526.png"
             alt="Bhoomi Group"
-            style={{ height: '55px', width: 'auto', background: '#0f172add', borderRadius: '55px', padding: '0 12px' }}
+            style={{ height: '55px', width: 'auto', background: '#000000dd', borderRadius: '55px', padding: '0 12px' }}
           />
         </div>
         
@@ -63,11 +63,11 @@ export function Navbar() {
               </button>
             </div>
             
-            <div className={`nav-dropdown absolute top-full left-0 py-[10px] rounded-lg min-w-[200px] opacity-0 pointer-events-none bg-[rgba(15,23,42,0.98)] shadow-[0_12px_30px_rgba(0,0,0,0.35)] translate-y-[6px] transition-all duration-150 ease-out group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 max-[900px]:static max-[900px]:shadow-none max-[900px]:bg-transparent max-[900px]:py-2 max-[900px]:overflow-hidden max-[900px]:transition-all max-[900px]:duration-300 ${openDropdown === 'services' ? 'max-[900px]:max-h-[300px] max-[900px]:opacity-100 max-[900px]:pointer-events-auto max-[900px]:mt-2' : 'max-[900px]:max-h-0 max-[900px]:opacity-0 max-[900px]:pointer-events-none max-[900px]:m-0 max-[900px]:p-0'}`}>
-              <a href="/services?tab=sales" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Sales</a>
-              <a href="/services?tab=marketing" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Marketing &amp; Branding</a>
-              <a href="/services?tab=after" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">After Sales Services</a>
-              <a href="/services?tab=analysis" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Project Analysis</a>
+            <div className={`nav-dropdown absolute top-full left-0 py-[10px] rounded-lg min-w-[200px] opacity-0 pointer-events-none bg-[rgba(0,0,0,0.98)] shadow-[0_12px_30px_rgba(0,0,0,0.5)] translate-y-[6px] transition-all duration-150 ease-out group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 max-[900px]:static max-[900px]:shadow-none max-[900px]:bg-transparent max-[900px]:py-2 max-[900px]:overflow-hidden max-[900px]:transition-all max-[900px]:duration-300 ${openDropdown === 'services' ? 'max-[900px]:max-h-[300px] max-[900px]:opacity-100 max-[900px]:pointer-events-auto max-[900px]:mt-2' : 'max-[900px]:max-h-0 max-[900px]:opacity-0 max-[900px]:pointer-events-none max-[900px]:m-0 max-[900px]:p-0'}`}>
+              <a href="/services?tab=sales" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Sales</a>
+              <a href="/services?tab=marketing" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Marketing &amp; Branding</a>
+              <a href="/services?tab=after" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">After Sales Services</a>
+              <a href="/services?tab=analysis" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Project Analysis</a>
             </div>
           </div>
 
@@ -87,11 +87,11 @@ export function Navbar() {
               </button>
             </div>
             
-            <div className={`nav-dropdown absolute top-full left-0 py-[10px] rounded-lg min-w-[200px] opacity-0 pointer-events-none bg-[rgba(15,23,42,0.98)] shadow-[0_12px_30px_rgba(0,0,0,0.35)] translate-y-[6px] transition-all duration-150 ease-out group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 max-[900px]:static max-[900px]:shadow-none max-[900px]:bg-transparent max-[900px]:py-2 max-[900px]:overflow-hidden max-[900px]:transition-all max-[900px]:duration-300 ${openDropdown === 'projects' ? 'max-[900px]:max-h-[300px] max-[900px]:opacity-100 max-[900px]:pointer-events-auto max-[900px]:mt-2' : 'max-[900px]:max-h-0 max-[900px]:opacity-0 max-[900px]:pointer-events-none max-[900px]:m-0 max-[900px]:p-0'}`}>
-              <a href="/projects?tab=plots" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Plots</a>
-              <a href="/projects?tab=land" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Land</a>
-              <a href="/projects?tab=residential" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Residentials</a>
-              <a href="/projects?tab=commercial" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(37,99,235,0.35)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Commercials</a>
+            <div className={`nav-dropdown absolute top-full left-0 py-[10px] rounded-lg min-w-[200px] opacity-0 pointer-events-none bg-[rgba(0,0,0,0.98)] shadow-[0_12px_30px_rgba(0,0,0,0.5)] translate-y-[6px] transition-all duration-150 ease-out group-hover/dropdown:opacity-100 group-hover/dropdown:pointer-events-auto group-hover/dropdown:translate-y-0 max-[900px]:static max-[900px]:shadow-none max-[900px]:bg-transparent max-[900px]:py-2 max-[900px]:overflow-hidden max-[900px]:transition-all max-[900px]:duration-300 ${openDropdown === 'projects' ? 'max-[900px]:max-h-[300px] max-[900px]:opacity-100 max-[900px]:pointer-events-auto max-[900px]:mt-2' : 'max-[900px]:max-h-0 max-[900px]:opacity-0 max-[900px]:pointer-events-none max-[900px]:m-0 max-[900px]:p-0'}`}>
+              <a href="/projects?tab=plots" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Plots</a>
+              <a href="/projects?tab=land" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Land</a>
+              <a href="/projects?tab=residential" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Residentials</a>
+              <a href="/projects?tab=commercial" className="block px-4 py-2 text-[0.85rem] whitespace-nowrap text-[var(--text-soft)] hover:bg-[rgba(255,255,255,0.07)] max-[900px]:text-base max-[900px]:text-gray-300 max-[900px]:py-2 max-[900px]:hover:text-white max-[900px]:hover:bg-transparent max-[900px]:text-center">Commercials</a>
             </div>
           </div>
 
@@ -108,7 +108,7 @@ export function Navbar() {
                 setIsSocialOpen(true);
               }} 
               type="button" 
-              className="inline-flex items-center justify-center gap-2 text-white px-[24px] py-[10px] rounded-full text-[0.95rem] font-semibold cursor-pointer bg-slate-800 border border-slate-600 transition-all duration-200 hover:bg-[#cfa861] hover:text-white hover:border-[#cfa861] w-full max-w-[250px]"
+              className="inline-flex items-center justify-center gap-2 text-white px-[24px] py-[10px] rounded-full text-[0.95rem] font-semibold cursor-pointer bg-black border border-gray-800 transition-all duration-200 hover:bg-[#cfa861] hover:text-white hover:border-[#cfa861] w-full max-w-[250px]"
             >
               <i className="fas fa-share-nodes text-base"></i> Let's Connect
             </button>
@@ -119,7 +119,7 @@ export function Navbar() {
           <button 
             onClick={() => setIsSocialOpen(true)} 
             type="button" 
-            className="btn-social-handlers inline-flex items-center gap-2 text-white px-[24px] py-[10px] rounded-full text-[0.95rem] font-semibold cursor-pointer bg-slate-800 border border-slate-600 transition-all duration-200 hover:-translate-y-[1px] hover:bg-[#cfa861] hover:text-white hover:border-[#cfa861] hover:shadow-[0_6px_20px_rgba(207,168,97,0.4)]" 
+            className="btn-social-handlers inline-flex items-center gap-2 text-white px-[24px] py-[10px] rounded-full text-[0.95rem] font-semibold cursor-pointer bg-black border border-gray-800 transition-all duration-200 hover:-translate-y-[1px] hover:bg-[#cfa861] hover:text-white hover:border-[#cfa861] hover:shadow-[0_6px_20px_rgba(207,168,97,0.4)]" 
             id="socialHandlersBtn" 
             aria-label="Open social links"
           >
