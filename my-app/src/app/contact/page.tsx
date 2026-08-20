@@ -8,8 +8,8 @@ import { ContactMap } from '../components/contact/ContactMap';
 import { ContactCTA } from '../components/contact/ContactCTA';
 
 export const metadata = {
-  title: 'Contact – Bhoomi Plots & Land',
-  description: 'Reach out to Bhoomi Plots & Land for site visits, project details or investment guidance.',
+  title: 'Contact – Bhoomi Group',
+  description: 'Reach out to Bhoomi Group for site visits, project details or investment guidance.',
 };
 
 export default function ContactPage() {

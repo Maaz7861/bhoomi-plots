@@ -2,7 +2,7 @@ import React from 'react';
 
 export function SuccessSection() {
   return (
-    <section className="success-section relative overflow-hidden" id="success-section" style={{ padding: 'clamp(48px, 8vw, 80px) 5%', background: 'linear-gradient(135deg, #0b1120 0%, #1a2744 60%, #0d1b32 100%)' }}>
+    <section className="success-section relative overflow-hidden" id="success-section" style={{ padding: 'clamp(48px, 8vw, 80px) 5%', background: 'linear-gradient(135deg, #000000 0%, #111111 60%, #0a0a0a 100%)' }}>
       <div className="success-bg absolute inset-0 pointer-events-none">
         <div className="success-grid-overlay absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(0, 194, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 194, 255, 0.04) 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
         <div className="success-glow absolute rounded-full pointer-events-none" style={{ width: 'clamp(300px, 40vw, 600px)', height: 'clamp(300px, 40vw, 600px)', top: '-20%', right: '-10%', background: 'radial-gradient(circle, rgba(197, 138, 35, 0.15) 0%, transparent 65%)' }}></div>

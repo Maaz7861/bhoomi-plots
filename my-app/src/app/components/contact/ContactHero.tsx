@@ -17,7 +17,7 @@ export function ContactHero() {
         </h1>
         
         <p className="text-[0.95rem] md:text-[1.05rem] text-[var(--text-body-muted)] leading-relaxed max-w-[600px]">
-          Reach out to Bhoomi Plots &amp; Land for site visits, project details
+          Reach out to Bhoomi Group for site visits, project details
           or investment guidance. Our team will be happy to assist you.
         </p>
       </div>

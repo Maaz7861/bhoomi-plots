@@ -19,9 +19,9 @@ export function Testimonials() {
   };
 
   return (
-    <section className="testimonials-section relative overflow-hidden py-[clamp(48px,7vw,72px)] px-[5%] bg-[#0b1120]" aria-label="Testimonials">
+    <section className="testimonials-section relative overflow-hidden py-[clamp(48px,7vw,72px)] px-[5%] bg-[#000000]" aria-label="Testimonials">
       <div className="testimonials-bg absolute inset-0 pointer-events-none">
-        <div className="testimonials-grid-overlay absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(rgba(0, 194, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 194, 255, 0.05) 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
+        <div className="testimonials-grid-overlay absolute inset-0 opacity-80" style={{ backgroundImage: 'linear-gradient(rgba(0, 194, 255, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 194, 255, 0.12) 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
       </div>
       <h2 className="testimonials-title relative z-[1] text-center font-bold mb-2 text-[var(--text-inverted)]" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)' }}>Testimonials</h2>
       <p className="testimonials-subtitle relative z-[1] text-center text-[0.9rem] mb-10 text-[var(--text-muted-light)]">What our clients say about us</p>
@@ -45,10 +45,10 @@ export function Testimonials() {
                 </video>
               </div>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-2 border-t border-[rgba(255,255,255,0.05)]">
-                <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent-strong))' }}>P</div>
+                <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent-strong))' }}>B</div>
                 <div>
-                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Priya M.</strong>
-                  <span className="text-[0.8rem] text-[var(--accent-cyan)] font-medium">Investor, Mumbai</span>
+                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Bhaskar Chaudhary</strong>
+                  <span className="text-[0.8rem] text-[var(--accent-cyan)] font-medium">Nashik</span>
                 </div>
               </div>
             </div>
@@ -62,8 +62,8 @@ export function Testimonials() {
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-2 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, var(--primary), var(--accent-strong))' }}>A</div>
                 <div>
-                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Amit S.</strong>
-                  <span className="text-[0.8rem] text-[var(--accent-cyan)] font-medium">Residential buyer, Baner</span>
+                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Amol Chawan</strong>
+                  <span className="text-[0.8rem] text-[var(--accent-cyan)] font-medium">Nashik</span>
                 </div>
               </div>
             </div>
@@ -71,7 +71,7 @@ export function Testimonials() {
             {/* ORIGINAL TEXT CARDS */}
             <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
-              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"Bhoomi Plots helped us find the perfect plot for our dream home. Their team was transparent, professional and went the extra mile. Highly recommended."</p>
+              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"Bhoomi Group helped us find the perfect plot for our dream home. Their team was transparent, professional and went the extra mile. Highly recommended."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}>R</div>
                 <div>
@@ -95,7 +95,7 @@ export function Testimonials() {
 
             <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
-              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"From consultation to registration, Bhoomi Plots and Lands gave us better options and solutions. Our family is now in a RERA-approved project. Thank you!"</p>
+              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"From consultation to registration, Bhoomi Group gave us better options and solutions. Our family is now in a RERA-approved project. Thank you!"</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, #ef4444, #b91c1c)' }}>V</div>
                 <div>
@@ -120,7 +120,7 @@ export function Testimonials() {
             {/* NEW ADDED CARDS IN ORIGINAL FORMAT */}
             <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
-              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"Bhoomi Plots helped us find the perfect plot for our dream home. Their team was transparent, professional and went the extra mile. Highly recommended."</p>
+              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"Bhoomi Group helped us find the perfect plot for our dream home. Their team was transparent, professional and went the extra mile. Highly recommended."</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)' }}>R</div>
                 <div>
@@ -136,20 +136,20 @@ export function Testimonials() {
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}>P</div>
                 <div>
-                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Priya M.</strong>
-                  <span className="text-[0.8rem] text-[var(--text-muted-light)]">Investor, Mumbai</span>
+                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Bhaskar Chaudhary</strong>
+                  <span className="text-[0.8rem] text-[var(--text-muted-light)]">Nashik</span>
                 </div>
               </div>
             </div>
 
             <div className="testimonial-card snap-start flex-shrink-0 w-[calc((100%-48px)/3)] max-[900px]:w-[calc((100%-24px)/2)] max-[600px]:w-[85vw] max-[600px]:min-w-[300px] rounded-[24px] p-6 max-[600px]:p-3 flex flex-col gap-5 bg-[rgba(15,23,42,0.6)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[12px] hover:-translate-y-2 hover:border-[rgba(0,194,255,0.4)] transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,194,255,0.1)]" data-kind="text">
               <div className="testimonial-quote-icon text-3xl text-[var(--accent-strong)] opacity-80 mb-2"><i className="fas fa-quote-left"></i></div>
-              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"From consultation to registration, Bhoomi Plots and Lands gave us better options and solutions. Our family is now in a RERA-approved project. Thank you!"</p>
+              <p className="testimonial-text text-[0.95rem] leading-relaxed flex-1 text-[var(--text-soft)] italic">"From consultation to registration, Bhoomi Group gave us better options and solutions. Our family is now in a RERA-approved project. Thank you!"</p>
               <div className="testimonial-author flex items-center gap-4 mt-auto pt-4 border-t border-[rgba(255,255,255,0.05)]">
                 <div className="testimonial-avatar w-12 h-12 rounded-full flex items-center justify-center font-bold text-[1.1rem] flex-shrink-0 text-[#fff] shadow-lg" style={{ background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)' }}>A</div>
                 <div>
-                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Amit S.</strong>
-                  <span className="text-[0.8rem] text-[var(--text-muted-light)]">Residential buyer, Baner</span>
+                  <strong className="block text-[0.95rem] font-bold text-[var(--text-inverted)]">Amol Chawan</strong>
+                  <span className="text-[0.8rem] text-[var(--text-muted-light)]">Nashik</span>
                 </div>
               </div>
             </div>

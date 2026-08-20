@@ -7,7 +7,7 @@ export function VideosFaq() {
   const faqs = [
     {
       id: 1,
-      question: "What types of properties does Bhoomi Plots and Lands offer?",
+      question: "What types of properties does Bhoomi Group offer?",
       answer: "We specialize in offering a variety of land plots, including residential, agricultural, and commercial plots, in well-selected and rapidly developing areas. Each plot is carefully vetted to ensure it meets our standards for quality, location, and future value."
     },
     {

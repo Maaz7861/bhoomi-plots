@@ -7,14 +7,14 @@ export function AboutIntro() {
         <p>
           We direct our vision of <strong className="font-bold text-[var(--text-dark-strong)]">“Assuring hope for a better future”</strong>
           {' '}and believe that investing in NA land &amp; plots changes lives. Our
-          focus at Bhoomi Plots and Land is to offer well-located communities,
+          focus at Bhoomi Group is to offer well-located communities,
           transparent processes and a clear strategy to create value for buyers
           and investors. With a strong team of self-driven professionals, we are
           grateful to our business associates and customers for their continuous
           trust in our services.
         </p>
         <p>
-          Bhoomi Plots and Land comes with a vision to help people find their
+          Bhoomi Group comes with a vision to help people find their
           dream investment. Our highly experienced team is always curious and
           attentive in delivering a trustworthy experience to our clients across
           Maharashtra and India.

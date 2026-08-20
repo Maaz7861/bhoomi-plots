@@ -25,11 +25,11 @@
   --bg-light: #f8fafc;
   --bg-light-soft: #f1f5f9;
   --bg-page-alt: #ffffff;
-  --bg-dark: #0b1120;
-  --bg-darker: #0f172a;
-  --bg-dark-alt: #1e293b;
-  --dark-bg: #0b1120;
-  --dark-panel: rgba(15, 23, 42, 0.85);
+  --bg-dark: #000000;
+  --bg-darker: #0a0a0a;
+  --bg-dark-alt: #111111;
+  --dark-bg: #000000;
+  --dark-panel: rgba(0, 0, 0, 0.85);
 
   --danger: #e63946;
   --success: #12b76a;
@@ -52,7 +52,7 @@
 
   --bg-page-gradient: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 40%, #ffffff 100%);
   --bg-page-gradient-alt: linear-gradient(to bottom, #f8fafc 0%, #e2e8f0 40%, #ffffff 100%);
-  --bg-navbar: #0f172add;
+  --bg-navbar: #000000dd;
 }
 
 /* ============================================================

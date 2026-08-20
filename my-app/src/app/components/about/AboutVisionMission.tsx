@@ -19,7 +19,7 @@ export function AboutVisionMission() {
             </p>
             <p className="text-[0.95rem] leading-relaxed text-[var(--text-body-muted)]">
               We focus on offering hassle-free home and land buying solutions under
-              one roof—making Bhoomi Plots and Land the most reliable and trusted
+              one roof—making Bhoomi Group the most reliable and trusted
               name for plotted development and real estate advisory.
             </p>
           </div>
@@ -56,7 +56,7 @@ export function AboutVisionMission() {
               Our Mission
             </h2>
             <p className="text-[0.95rem] leading-relaxed text-[var(--text-body-muted)]">
-              At Bhoomi Plots and Land we dream to modernise the traditional
+              At Bhoomi Group we dream to modernise the traditional
               experience of real estate. Our mission is to provide buyers and
               homeowners with investment options that
               <strong className="font-semibold text-[var(--text-dark-strong)]"> exceed expectations</strong>—backed by expert guidance and
