@@ -4,13 +4,13 @@ import Image from 'next/image';
 
 export function BlogFeatured() {
   return (
-    <section>
-      <div className="flex items-center gap-4 mb-6">
+    <section className="h-full flex flex-col">
+      <div className="flex items-center gap-4 mb-6 shrink-0">
         <h2 className="text-2xl font-bold text-[var(--text-dark-strong)] tracking-tight">Featured Article</h2>
         <div className="flex-1 h-px bg-[var(--border-subtle)]"></div>
       </div>
       
-      <article className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_25px_50px_-12px_rgba(197,138,35,0.25)] hover:-translate-y-2 transition-all duration-500 border border-[var(--border-subtle-alt)] hover:border-[var(--primary)]/30 flex flex-col relative h-full">
+      <article className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-[0_25px_50px_-12px_rgba(197,138,35,0.25)] hover:-translate-y-2 transition-all duration-500 border border-[var(--border-subtle-alt)] hover:border-[var(--primary)]/30 flex flex-col relative flex-1">
         
         {/* Featured Image Area */}
         <div className="w-full aspect-[2/1] md:aspect-[21/9] bg-slate-100 relative overflow-hidden shrink-0 border-b border-[var(--border-subtle-alt)]">

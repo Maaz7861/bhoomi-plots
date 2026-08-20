@@ -23,12 +23,12 @@ export default function BlogPage() {
         {/* Top Section: Featured Article + Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch mb-16">
           {/* Main Area: Featured Article */}
-          <div className="lg:col-span-8 flex flex-col h-full">
+          <div className="lg:col-span-8 flex flex-col">
             <BlogFeatured />
           </div>
           
           {/* Sidebar Area */}
-          <div className="lg:col-span-4 h-full">
+          <div className="lg:col-span-4">
             <BlogSidebar />
           </div>
         </div>

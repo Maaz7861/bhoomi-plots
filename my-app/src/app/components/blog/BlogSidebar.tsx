@@ -10,7 +10,7 @@ export function BlogSidebar() {
   ];
 
   return (
-    <aside className="flex flex-col gap-6 sticky top-24">
+    <aside className="flex flex-col gap-6 lg:sticky lg:top-24">
       
       {/* Categories Widget */}
       <div className="bg-white rounded-2xl shadow-sm border border-[var(--border-subtle-alt)] p-6">
