@@ -10,7 +10,7 @@ export function SuccessSection() {
       <div className="success-inner relative z-[1] flex flex-wrap justify-between items-center" style={{ gap: 'clamp(28px, 5vw, 60px)' }}>
         <div className="success-content flex flex-col max-w-[420px]" style={{ flex: '1 1 320px' }}>
           <span className="success-kicker uppercase font-semibold mb-3 tracking-[0.12em] text-[0.78rem] text-[var(--accent-strong)]">Build Your Dream</span>
-          <h2 className="success-headline font-bold leading-tight mb-4 text-[var(--text-inverted)]" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>3 Years Of<br />Undefeated Success</h2>
+          <h2 className="success-headline font-bold leading-tight mb-4 text-[var(--text-inverted)]" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>5 Years Of<br />Undefeated Success</h2>
           <p className="success-desc text-[0.93rem] leading-relaxed text-[var(--text-muted-light)]">
             Our deep understanding of the local market means we can provide you with insights and
             opportunities that others might miss. We know the region&apos;s zoning laws, community
@@ -27,11 +27,11 @@ export function SuccessSection() {
             <span className="success-stat-label text-[0.82rem] font-medium uppercase tracking-wide text-[var(--text-muted-light)]">Property Sold</span>
           </div>
           <div className="success-stat flex flex-col rounded-[16px] bg-[rgba(255,255,255,0.05)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[8px] transition-all duration-300 ease-out hover:border-[rgba(245,197,75,0.4)] hover:bg-[rgba(245,197,75,0.06)]" style={{ padding: 'clamp(14px, 2vw, 22px)' }}>
-            <span className="success-stat-value font-bold leading-none mb-1 text-[var(--accent-strong)]" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }} data-value="837">837</span>
+            <span className="success-stat-value font-bold leading-none mb-1 text-[var(--accent-strong)]" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }} data-value="1025">1,025</span>
             <span className="success-stat-label text-[0.82rem] font-medium uppercase tracking-wide text-[var(--text-muted-light)]">Happy Family</span>
           </div>
           <div className="success-stat flex flex-col rounded-[16px] bg-[rgba(255,255,255,0.05)] border border-[rgba(0,194,255,0.15)] backdrop-blur-[8px] transition-all duration-300 ease-out hover:border-[rgba(245,197,75,0.4)] hover:bg-[rgba(245,197,75,0.06)]" style={{ padding: 'clamp(14px, 2vw, 22px)' }}>
-            <span className="success-stat-value font-bold leading-none mb-1 text-[var(--accent-strong)]" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }} data-value="15">15+</span>
+            <span className="success-stat-value font-bold leading-none mb-1 text-[var(--accent-strong)]" style={{ fontSize: 'clamp(1.6rem, 3vw, 2.2rem)' }} data-value="17">17+</span>
             <span className="success-stat-label text-[0.82rem] font-medium uppercase tracking-wide text-[var(--text-muted-light)]">years of experience</span>
           </div>
         </div>
