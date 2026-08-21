@@ -15,7 +15,7 @@ export function WhyChooseUs() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop")' }}
           ></div>
-          <div className="absolute inset-0 bg-[#0f172a]/90"></div> {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/90"></div> {/* Dark overlay */}
 
           <div className="relative z-10 flex flex-col h-full">
             <span className="uppercase text-[0.65rem] md:text-[0.7rem] tracking-[0.2em] font-bold mb-3 text-[#f5b041]">
