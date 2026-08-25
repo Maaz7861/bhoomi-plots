@@ -1,51 +1,70 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Topbar } from "../../components/Topbar";
-import { BannerForm } from "../../components/BannerForm";
+import { BannerForm, BannerFormData } from "../../components/BannerForm";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
-
-// Mock data — will come from API later
-const MOCK_BANNERS = [
-  {
-    id: "b1",
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80",
-    ctaText: "Explore Premium Plots →",
-    link: "http://localhost:3000/projects",
-    isActive: true,
-    createdAt: "2026-08-20",
-  },
-  {
-    id: "b2",
-    imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80",
-    ctaText: "View Commercial Spaces",
-    link: "http://localhost:3000/projects?tab=commercial",
-    isActive: false,
-    createdAt: "2026-08-18",
-  },
-];
+import { getBanners, createBanner, updateBanner, deleteBanner, BannerData } from "../../../lib/api";
 
 export default function BannersPage() {
-  const [banners, setBanners] = useState(MOCK_BANNERS);
+  const [banners, setBanners] = useState<BannerData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [formOpen, setFormOpen] = useState(false);
-  const [editingBanner, setEditingBanner] = useState<(typeof MOCK_BANNERS)[0] | null>(null);
+  const [editingBanner, setEditingBanner] = useState<BannerData | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleToggleActive = (id: string) => {
-    setBanners((prev) =>
-      prev.map((b) => ({
-        ...b,
-        isActive: b.id === id ? !b.isActive : false, // only one active at a time
-      }))
-    );
+  const fetchBanners = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getBanners();
+      setBanners(data);
+    } catch (err: any) {
+      setError(err.message || "Failed to load banners.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBanners();
+  }, [fetchBanners]);
+
+  const handleFormSubmit = async (formData: BannerFormData) => {
+    if (editingBanner && editingBanner._id) {
+      await updateBanner(editingBanner._id, formData);
+    } else {
+      await createBanner(formData);
+    }
+    await fetchBanners();
   };
 
-  const handleDelete = () => {
+  const handleToggleActive = async (banner: BannerData) => {
+    if (!banner._id) return;
+    try {
+      await updateBanner(banner._id, { isActive: !banner.isActive });
+      await fetchBanners();
+    } catch (err: any) {
+      alert(err.message || "Failed to update banner status.");
+    }
+  };
+
+  const handleDelete = async () => {
     if (!deleteTarget) return;
-    setBanners((prev) => prev.filter((b) => b.id !== deleteTarget));
-    setDeleteTarget(null);
+    try {
+      setIsDeleting(true);
+      await deleteBanner(deleteTarget);
+      setDeleteTarget(null);
+      await fetchBanners();
+    } catch (err: any) {
+      alert(err.message || "Failed to delete banner.");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
-  const handleEdit = (banner: (typeof MOCK_BANNERS)[0]) => {
+  const handleEdit = (banner: BannerData) => {
     setEditingBanner(banner);
     setFormOpen(true);
   };
@@ -83,6 +102,31 @@ export default function BannersPage() {
           </button>
         </div>
 
+        {error && (
+          <div
+            style={{
+              background: "rgba(230, 57, 70, 0.12)",
+              border: "1px solid rgba(230, 57, 70, 0.3)",
+              borderRadius: "var(--radius-sm)",
+              padding: "12px 16px",
+              color: "#ef4444",
+              fontSize: "0.85rem",
+              marginBottom: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <i className="fas fa-circle-exclamation"></i>
+              <span>{error}</span>
+            </div>
+            <button className="btn btn-ghost btn-sm" onClick={fetchBanners}>
+              Retry
+            </button>
+          </div>
+        )}
+
         {/* Info strip */}
         <div
           style={{
@@ -105,7 +149,12 @@ export default function BannersPage() {
           </span>
         </div>
 
-        {banners.length === 0 ? (
+        {loading ? (
+          <div style={{ padding: "60px 20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+            <div className="spinner" style={{ width: "32px", height: "32px", borderWidth: "3px", borderColor: "rgba(197,138,35,0.2)", borderTopColor: "var(--primary)" }}></div>
+            <span style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>Loading banners from database...</span>
+          </div>
+        ) : banners.length === 0 ? (
           <div className="admin-card">
             <div className="empty-state">
               <div className="empty-state-icon">
@@ -115,7 +164,7 @@ export default function BannersPage() {
               <div className="empty-state-desc">
                 Add your first banner advertisement to display it on the landing page.
               </div>
-              <button className="btn btn-primary btn-sm" onClick={() => setFormOpen(true)} id="banners-empty-add-btn">
+              <button className="btn btn-primary btn-sm" onClick={() => { setEditingBanner(null); setFormOpen(true); }} id="banners-empty-add-btn">
                 <i className="fas fa-plus"></i> Add Banner
               </button>
             </div>
@@ -124,7 +173,7 @@ export default function BannersPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {banners.map((banner) => (
               <div
-                key={banner.id}
+                key={banner._id}
                 className="admin-card"
                 style={{
                   borderColor: banner.isActive ? "var(--primary)" : undefined,
@@ -219,7 +268,7 @@ export default function BannersPage() {
 
                     <div style={{ fontSize: "0.73rem", color: "var(--text-muted)" }}>
                       <i className="fas fa-calendar-day" style={{ marginRight: "4px" }}></i>
-                      Added {banner.createdAt}
+                      Added {banner.createdAt ? new Date(banner.createdAt).toLocaleDateString() : "Recently"}
                     </div>
                   </div>
 
@@ -232,11 +281,11 @@ export default function BannersPage() {
                       </span>
                       <div
                         className={`toggle ${banner.isActive ? "on" : ""}`}
-                        onClick={() => handleToggleActive(banner.id)}
+                        onClick={() => handleToggleActive(banner)}
                         role="switch"
                         aria-checked={banner.isActive}
                         tabIndex={0}
-                        id={`banner-toggle-${banner.id}`}
+                        id={`banner-toggle-${banner._id}`}
                       />
                     </div>
 
@@ -246,16 +295,16 @@ export default function BannersPage() {
                         onClick={() => handleEdit(banner)}
                         aria-label={`Edit banner`}
                         title="Edit"
-                        id={`banner-edit-${banner.id}`}
+                        id={`banner-edit-${banner._id}`}
                       >
                         <i className="fas fa-pen-to-square"></i>
                       </button>
                       <button
                         className="btn btn-icon btn-icon-delete"
-                        onClick={() => setDeleteTarget(banner.id)}
+                        onClick={() => setDeleteTarget(banner._id || null)}
                         aria-label={`Delete banner`}
                         title="Delete"
-                        id={`banner-delete-${banner.id}`}
+                        id={`banner-delete-${banner._id}`}
                       >
                         <i className="fas fa-trash-can"></i>
                       </button>
@@ -272,6 +321,7 @@ export default function BannersPage() {
       <BannerForm
         isOpen={formOpen}
         onClose={() => { setFormOpen(false); setEditingBanner(null); }}
+        onSubmit={handleFormSubmit}
         initialData={editingBanner ?? undefined}
         isEditing={!!editingBanner}
       />
@@ -281,10 +331,10 @@ export default function BannersPage() {
         isOpen={!!deleteTarget}
         title="Delete this banner?"
         description="This will permanently remove the banner. If it was active, no banner will be shown on the landing page."
-        confirmLabel="Yes, Delete"
+        confirmLabel={isDeleting ? "Deleting..." : "Yes, Delete"}
         variant="danger"
         onConfirm={handleDelete}
-        onCancel={() => setDeleteTarget(null)}
+        onCancel={() => !isDeleting && setDeleteTarget(null)}
       />
     </>
   );

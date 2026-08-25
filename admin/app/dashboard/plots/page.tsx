@@ -1,82 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Topbar } from "../../components/Topbar";
 import { PlotForm, PlotFormData } from "../../components/PlotForm";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
-
-// Mock data — will come from API later
-const MOCK_PLOTS = [
-  {
-    id: "p1",
-    title: "Lakeview Township",
-    category: "plots" as const,
-    price: "₹ 45 Lakh",
-    location: "Near Hinjewadi, Pune",
-    status: "Fast Selling",
-    developer: "Bhoomi Projects",
-    reraNumber: "P52100012345",
-    isFeatured: true,
-    imageUrl: "/projects/plot.jpg",
-    description: "Plotted development with central park, lake promenade and clubhouse.",
-    features: "1200 sq.ft • 3000 sq.ft • Lake Front",
-  },
-  {
-    id: "p2",
-    title: "Expressway Enclave",
-    category: "plots" as const,
-    price: "₹ 60 Lakh",
-    location: "Pune–Mumbai Expressway",
-    status: "Limited Inventory",
-    developer: "Bhoomi Projects",
-    reraNumber: "P52100067890",
-    isFeatured: false,
-    imageUrl: "/projects/plot.jpg",
-    description: "Road-touch plots just off the expressway.",
-    features: "2000 sq.ft • 5000 sq.ft • Highway Touch",
-  },
-  {
-    id: "l1",
-    title: "Bhoomi Hills",
-    category: "land" as const,
-    price: "₹ 2.5 Cr",
-    location: "Nashik Road, Nashik",
-    status: "High Appreciation",
-    developer: "Bhoomi Projects",
-    reraNumber: "P51600022334",
-    isFeatured: true,
-    imageUrl: "/projects/land.jpg",
-    description: "Scenic NA land parcels overlooking hills.",
-    features: "NA Land • Clear Title • Hill View",
-  },
-  {
-    id: "r1",
-    title: "Premium Bungalow",
-    category: "residential" as const,
-    price: "₹ 1.27 Cr",
-    location: "500 MG Road, Camp, Pune",
-    status: "RERA Approved",
-    developer: "Bhoomi Prime",
-    reraNumber: "P52100088990",
-    isFeatured: true,
-    imageUrl: "/projects/residential.jpg",
-    description: "Premium 3 BHK bungalow with private sit-out.",
-    features: "3 Bds • 3 Ba • 1,250 sqft",
-  },
-  {
-    id: "c1",
-    title: "Horizon IT Park",
-    category: "commercial" as const,
-    price: "₹ 3.5 Cr",
-    location: "Baner, Pune",
-    status: "Under Construction",
-    developer: "Bhoomi Commercials",
-    reraNumber: "P52100033445",
-    isFeatured: true,
-    imageUrl: "/projects/commercial.jpg",
-    description: "Premium office spaces for IT and multinational companies.",
-    features: "Grade A • Office Spaces • Food Court",
-  },
-];
+import { getPlots, createPlot, updatePlot, deletePlot, PlotData } from "../../../lib/api";
 
 type Category = "all" | "plots" | "land" | "residential" | "commercial";
 
@@ -88,12 +15,32 @@ const CATEGORY_CHIP: Record<string, string> = {
 };
 
 export default function PlotsPage() {
-  const [plots, setPlots] = useState(MOCK_PLOTS);
+  const [plots, setPlots] = useState<PlotData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<Category>("all");
   const [formOpen, setFormOpen] = useState(false);
-  const [editingPlot, setEditingPlot] = useState<(typeof MOCK_PLOTS)[0] | null>(null);
+  const [editingPlot, setEditingPlot] = useState<PlotData | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const fetchPlots = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await getPlots();
+      setPlots(data);
+    } catch (err: any) {
+      setError(err.message || "Failed to load plots.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchPlots();
+  }, [fetchPlots]);
 
   const filtered = plots.filter((p) => {
     const matchSearch =
@@ -103,13 +50,30 @@ export default function PlotsPage() {
     return matchSearch && matchCat;
   });
 
-  const handleDelete = () => {
-    if (!deleteTarget) return;
-    setPlots((prev) => prev.filter((p) => p.id !== deleteTarget));
-    setDeleteTarget(null);
+  const handleFormSubmit = async (formData: PlotFormData) => {
+    if (editingPlot && editingPlot._id) {
+      await updatePlot(editingPlot._id, formData);
+    } else {
+      await createPlot(formData);
+    }
+    await fetchPlots();
   };
 
-  const handleEdit = (plot: (typeof MOCK_PLOTS)[0]) => {
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    try {
+      setIsDeleting(true);
+      await deletePlot(deleteTarget);
+      setDeleteTarget(null);
+      await fetchPlots();
+    } catch (err: any) {
+      alert(err.message || "Failed to delete plot.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleEdit = (plot: PlotData) => {
     setEditingPlot(plot);
     setFormOpen(true);
   };
@@ -140,7 +104,7 @@ export default function PlotsPage() {
               Property Listings
             </h1>
             <p style={{ fontSize: "0.82rem", color: "var(--text-muted)", marginTop: "2px" }}>
-              {plots.length} total listings across 4 categories
+              {plots.length} total listings in MongoDB
             </p>
           </div>
           <button
@@ -151,6 +115,31 @@ export default function PlotsPage() {
             <i className="fas fa-plus"></i> Add Plot
           </button>
         </div>
+
+        {error && (
+          <div
+            style={{
+              background: "rgba(230, 57, 70, 0.12)",
+              border: "1px solid rgba(230, 57, 70, 0.3)",
+              borderRadius: "var(--radius-sm)",
+              padding: "12px 16px",
+              color: "#ef4444",
+              fontSize: "0.85rem",
+              marginBottom: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <i className="fas fa-circle-exclamation"></i>
+              <span>{error}</span>
+            </div>
+            <button className="btn btn-ghost btn-sm" onClick={fetchPlots}>
+              Retry
+            </button>
+          </div>
+        )}
 
         {/* Filters */}
         <div className="admin-card" style={{ padding: "16px 20px", marginBottom: "16px" }}>
@@ -200,12 +189,17 @@ export default function PlotsPage() {
             <div>
               <div className="admin-card-title">All Listings</div>
               <div className="admin-card-subtitle">
-                Showing {filtered.length} of {plots.length} entries
+                {loading ? "Loading listings..." : `Showing ${filtered.length} of ${plots.length} entries`}
               </div>
             </div>
           </div>
 
-          {filtered.length === 0 ? (
+          {loading ? (
+            <div style={{ padding: "60px 20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
+              <div className="spinner" style={{ width: "32px", height: "32px", borderWidth: "3px", borderColor: "rgba(197,138,35,0.2)", borderTopColor: "var(--primary)" }}></div>
+              <span style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>Loading plots from database...</span>
+            </div>
+          ) : filtered.length === 0 ? (
             <div className="empty-state">
               <div className="empty-state-icon">
                 <i className="fas fa-layer-group"></i>
@@ -216,7 +210,7 @@ export default function PlotsPage() {
                   ? "Try adjusting your search or filters."
                   : "Get started by adding your first property listing."}
               </div>
-              <button className="btn btn-primary btn-sm" onClick={() => setFormOpen(true)} id="plots-empty-add-btn">
+              <button className="btn btn-primary btn-sm" onClick={() => { setEditingPlot(null); setFormOpen(true); }} id="plots-empty-add-btn">
                 <i className="fas fa-plus"></i> Add Plot
               </button>
             </div>
@@ -237,7 +231,7 @@ export default function PlotsPage() {
                 </thead>
                 <tbody>
                   {filtered.map((plot) => (
-                    <tr key={plot.id}>
+                    <tr key={plot._id}>
                       <td>
                         {plot.imageUrl ? (
                           <img src={plot.imageUrl} alt={plot.title} className="table-thumb" />
@@ -284,16 +278,16 @@ export default function PlotsPage() {
                             onClick={() => handleEdit(plot)}
                             aria-label={`Edit ${plot.title}`}
                             title="Edit"
-                            id={`plot-edit-${plot.id}`}
+                            id={`plot-edit-${plot._id}`}
                           >
                             <i className="fas fa-pen-to-square"></i>
                           </button>
                           <button
                             className="btn btn-icon btn-icon-delete"
-                            onClick={() => setDeleteTarget(plot.id)}
+                            onClick={() => setDeleteTarget(plot._id || null)}
                             aria-label={`Delete ${plot.title}`}
                             title="Delete"
-                            id={`plot-delete-${plot.id}`}
+                            id={`plot-delete-${plot._id}`}
                           >
                             <i className="fas fa-trash-can"></i>
                           </button>
@@ -312,6 +306,7 @@ export default function PlotsPage() {
       <PlotForm
         isOpen={formOpen}
         onClose={handleFormClose}
+        onSubmit={handleFormSubmit}
         initialData={editingPlot ?? undefined}
         isEditing={!!editingPlot}
       />
@@ -320,11 +315,11 @@ export default function PlotsPage() {
       <ConfirmDialog
         isOpen={!!deleteTarget}
         title="Delete this listing?"
-        description="This will permanently remove the plot from the database. This action cannot be undone."
-        confirmLabel="Yes, Delete"
+        description="This will permanently remove the plot from the MongoDB database. This action cannot be undone."
+        confirmLabel={isDeleting ? "Deleting..." : "Yes, Delete"}
         variant="danger"
         onConfirm={handleDelete}
-        onCancel={() => setDeleteTarget(null)}
+        onCancel={() => !isDeleting && setDeleteTarget(null)}
       />
     </>
   );

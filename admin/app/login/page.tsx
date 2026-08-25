@@ -1,17 +1,28 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link";
+import { loginAdmin } from "../../lib/api";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Backend auth will be wired here later
-    // For now, redirect to dashboard
-    window.location.href = "/dashboard";
+    setError(null);
+    setLoading(true);
+
+    try {
+      await loginAdmin(email.trim(), password);
+      // Redirect to dashboard upon successful login
+      window.location.href = "/dashboard";
+    } catch (err: any) {
+      setError(err.message || "Failed to log in. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,6 +42,26 @@ export default function LoginPage() {
         <h1 className="auth-heading">Welcome back</h1>
         <p className="auth-sub">Sign in to manage your properties &amp; banners</p>
 
+        {error && (
+          <div
+            style={{
+              background: "rgba(230, 57, 70, 0.15)",
+              border: "1px solid rgba(230, 57, 70, 0.4)",
+              borderRadius: "var(--radius-sm)",
+              padding: "10px 14px",
+              color: "#fca5a5",
+              fontSize: "0.85rem",
+              marginBottom: "18px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <i className="fas fa-circle-exclamation" style={{ color: "#ef4444" }}></i>
+            <span>{error}</span>
+          </div>
+        )}
+
         <form className="auth-form" onSubmit={handleSubmit}>
           {/* Email */}
           <div>
@@ -46,6 +77,7 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               autoComplete="email"
+              disabled={loading}
             />
           </div>
 
@@ -64,29 +96,37 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 autoComplete="current-password"
+                disabled={loading}
               />
               <button
                 type="button"
                 className="input-icon-right"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
+                disabled={loading}
               >
                 <i className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
               </button>
             </div>
           </div>
 
-          <button type="submit" className="auth-btn" id="login-submit-btn">
-            <i className="fas fa-arrow-right-to-bracket" style={{ marginRight: "7px" }}></i>
-            Sign In
+          <button type="submit" className="auth-btn" id="login-submit-btn" disabled={loading}>
+            {loading ? (
+              <>
+                <span className="spinner" style={{ marginRight: "8px" }}></span>
+                Signing In...
+              </>
+            ) : (
+              <>
+                <i className="fas fa-arrow-right-to-bracket" style={{ marginRight: "7px" }}></i>
+                Sign In
+              </>
+            )}
           </button>
         </form>
 
         <p className="auth-footer-text">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="auth-link">
-            Register here
-          </Link>
+          Default Admin: <code style={{ color: "var(--accent-strong)" }}>admin@bhoomigroup.com</code>
         </p>
       </div>
     </div>

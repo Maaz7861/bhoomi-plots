@@ -1,19 +1,8 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { uploadImageFile, PlotData } from "../../lib/api";
 
-export interface PlotFormData {
-  title: string;
-  category: "plots" | "land" | "residential" | "commercial";
-  price: string;
-  location: string;
-  description: string;
-  features: string;
-  status: string;
-  reraNumber: string;
-  developer: string;
-  imageUrl: string;
-  isFeatured: boolean;
-}
+export type PlotFormData = Omit<PlotData, "_id" | "createdAt">;
 
 const EMPTY_FORM: PlotFormData = {
   title: "",
@@ -45,15 +34,33 @@ const STATUS_OPTIONS = [
 interface PlotFormProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: (data: PlotFormData) => Promise<void>;
   initialData?: Partial<PlotFormData>;
   isEditing?: boolean;
 }
 
-export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: PlotFormProps) {
+export function PlotForm({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialData,
+  isEditing = false,
+}: PlotFormProps) {
   const [form, setForm] = useState<PlotFormData>({ ...EMPTY_FORM, ...initialData });
   const [imagePreview, setImagePreview] = useState<string | null>(initialData?.imageUrl || null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setForm({ ...EMPTY_FORM, ...initialData });
+      setImagePreview(initialData?.imageUrl || null);
+      setUploadError(null);
+    }
+  }, [isOpen, initialData]);
 
   if (!isOpen) return null;
 
@@ -68,11 +75,30 @@ export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: Pl
     }
   };
 
-  const handleFilePick = (file: File) => {
-    if (!file.type.startsWith("image/")) return;
-    const url = URL.createObjectURL(file);
-    setImagePreview(url);
-    setForm((f) => ({ ...f, imageUrl: url })); // will be replaced with Cloudinary URL later
+  const handleFilePick = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setUploadError("Please select a valid image file.");
+      return;
+    }
+
+    setUploadError(null);
+    setIsUploading(true);
+
+    // Show temporary local preview while uploading
+    const localUrl = URL.createObjectURL(file);
+    setImagePreview(localUrl);
+
+    try {
+      const cloudinaryUrl = await uploadImageFile(file);
+      setImagePreview(cloudinaryUrl);
+      setForm((f) => ({ ...f, imageUrl: cloudinaryUrl }));
+    } catch (err: any) {
+      setUploadError(err.message || "Failed to upload image to Cloudinary.");
+      setImagePreview(initialData?.imageUrl || null);
+      setForm((f) => ({ ...f, imageUrl: initialData?.imageUrl || "" }));
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,15 +111,23 @@ export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: Pl
     if (e.dataTransfer.files?.[0]) handleFilePick(e.dataTransfer.files[0]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // API call will be wired here
-    console.log("Plot form data:", form);
-    onClose();
+    setIsSubmitting(true);
+    setUploadError(null);
+
+    try {
+      await onSubmit(form);
+      onClose();
+    } catch (err: any) {
+      setUploadError(err.message || "Failed to save plot.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && !isSubmitting && onClose()}>
       <div className="modal-drawer" role="dialog" aria-modal="true" aria-label={isEditing ? "Edit Plot" : "Add New Plot"}>
         {/* Header */}
         <div className="modal-header">
@@ -102,7 +136,7 @@ export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: Pl
               {isEditing ? "Edit Plot / Project" : "Add New Plot / Project"}
             </div>
           </div>
-          <button className="modal-close" onClick={onClose} aria-label="Close drawer">
+          <button className="modal-close" onClick={onClose} disabled={isSubmitting} aria-label="Close drawer">
             <i className="fas fa-xmark"></i>
           </button>
         </div>
@@ -110,6 +144,25 @@ export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: Pl
         {/* Body */}
         <form onSubmit={handleSubmit} id="plot-form">
           <div className="modal-body">
+
+            {uploadError && (
+              <div
+                style={{
+                  background: "rgba(230, 57, 70, 0.12)",
+                  border: "1px solid rgba(230, 57, 70, 0.3)",
+                  borderRadius: "var(--radius-sm)",
+                  padding: "10px 14px",
+                  color: "#ef4444",
+                  fontSize: "0.82rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <i className="fas fa-circle-exclamation"></i>
+                <span>{uploadError}</span>
+              </div>
+            )}
 
             {/* Image upload */}
             <div className="form-group">
@@ -123,37 +176,82 @@ export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: Pl
                 style={{ display: "none" }}
                 id="plot-image-input"
                 onChange={handleFileInput}
+                disabled={isUploading}
               />
               {imagePreview ? (
-                <div className="upload-preview">
-                  <img src={imagePreview} alt="Preview" />
-                  <button
-                    type="button"
-                    className="upload-preview-remove"
-                    onClick={() => { setImagePreview(null); setForm((f) => ({ ...f, imageUrl: "" })); }}
-                    aria-label="Remove image"
-                  >
-                    <i className="fas fa-xmark"></i>
-                  </button>
+                <div className="upload-preview" style={{ position: "relative" }}>
+                  <img src={imagePreview} alt="Preview" style={{ opacity: isUploading ? 0.5 : 1 }} />
+                  {isUploading ? (
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "rgba(0,0,0,0.5)",
+                        color: "white",
+                        gap: "8px",
+                      }}
+                    >
+                      <div className="spinner" style={{ width: "24px", height: "24px" }}></div>
+                      <span style={{ fontSize: "0.78rem" }}>Uploading to Cloudinary...</span>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "rgba(0,0,0,0.3)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "8px",
+                        opacity: 0,
+                        transition: "opacity 0.2s",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                      onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
+                    >
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-sm"
+                        style={{ background: "white", color: "var(--text-dark)" }}
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        <i className="fas fa-arrow-up-from-bracket"></i> Change
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          setImagePreview(null);
+                          setForm((f) => ({ ...f, imageUrl: "" }));
+                        }}
+                      >
+                        <i className="fas fa-trash-can"></i> Remove
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div
                   className={`upload-zone ${dragOver ? "drag-over" : ""}`}
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={() => !isUploading && fileInputRef.current?.click()}
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={handleDrop}
                 >
                   <div className="upload-zone-icon">
-                    <i className="fas fa-cloud-arrow-up"></i>
+                    {isUploading ? <div className="spinner"></div> : <i className="fas fa-cloud-arrow-up"></i>}
                   </div>
                   <p className="upload-zone-text">
                     <strong>Click to upload</strong> or drag &amp; drop
                   </p>
-                  <p className="upload-zone-sub">PNG, JPG, WEBP — max 5 MB</p>
+                  <p className="upload-zone-sub">Uploads directly to Cloudinary (PNG, JPG, WEBP)</p>
                 </div>
               )}
-              <p className="form-hint">Image will be uploaded to Cloudinary.</p>
             </div>
 
             {/* Title */}
@@ -349,12 +447,21 @@ export function PlotForm({ isOpen, onClose, initialData, isEditing = false }: Pl
 
           {/* Footer */}
           <div className="modal-footer">
-            <button type="button" className="btn btn-ghost" onClick={onClose} id="plot-form-cancel">
+            <button type="button" className="btn btn-ghost" onClick={onClose} disabled={isSubmitting || isUploading} id="plot-form-cancel">
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary" id="plot-form-submit">
-              <i className={`fas ${isEditing ? "fa-floppy-disk" : "fa-plus"}`}></i>
-              {isEditing ? "Save Changes" : "Add Plot"}
+            <button type="submit" className="btn btn-primary" id="plot-form-submit" disabled={isSubmitting || isUploading}>
+              {isSubmitting ? (
+                <>
+                  <span className="spinner" style={{ marginRight: "6px" }}></span>
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <i className={`fas ${isEditing ? "fa-floppy-disk" : "fa-plus"}`}></i>
+                  {isEditing ? "Save Changes" : "Add Plot"}
+                </>
+              )}
             </button>
           </div>
         </form>

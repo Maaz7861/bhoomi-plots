@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { clearToken, getAdminUser } from "../../lib/api";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -32,10 +33,21 @@ const navSections = [
 
 export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [adminUser, setAdminUser] = useState<{ name: string; email: string; role: string } | null>(null);
+
+  useEffect(() => {
+    setAdminUser(getAdminUser());
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/dashboard") return pathname === "/dashboard";
     return pathname.startsWith(href);
+  };
+
+  const handleLogout = () => {
+    clearToken();
+    router.replace("/login");
   };
 
   return (
@@ -101,10 +113,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           <button
             className="sidebar-link"
             style={{ color: "#f87171" }}
-            onClick={() => {
-              // logout logic will go here
-              window.location.href = "/login";
-            }}
+            onClick={handleLogout}
             id="sidebar-logout-btn"
           >
             <i className="fas fa-right-from-bracket"></i>
@@ -115,10 +124,12 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
           {/* User chip */}
           <div className="sidebar-user">
-            <div className="sidebar-avatar">A</div>
+            <div className="sidebar-avatar">
+              {adminUser?.name ? adminUser.name.charAt(0).toUpperCase() : "A"}
+            </div>
             <div className="sidebar-user-info">
-              <div className="sidebar-user-name">Admin User</div>
-              <div className="sidebar-user-role">Super Admin</div>
+              <div className="sidebar-user-name">{adminUser?.name || "Bhoomi Admin"}</div>
+              <div className="sidebar-user-role">{adminUser?.email || "admin@bhoomigroup.com"}</div>
             </div>
           </div>
         </div>

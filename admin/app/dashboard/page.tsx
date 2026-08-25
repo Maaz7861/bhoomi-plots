@@ -1,58 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Topbar } from "../components/Topbar";
 import Link from "next/link";
-
-// Placeholder stat data — will come from API later
-const stats = [
-  {
-    id: "total-plots",
-    label: "Total Plots",
-    value: "12",
-    icon: "fa-layer-group",
-    iconBg: "#fef3c7",
-    iconColor: "#92400e",
-    change: "+2 this month",
-    changeDir: "up",
-  },
-  {
-    id: "active-banners",
-    label: "Active Banners",
-    value: "1",
-    icon: "fa-rectangle-ad",
-    iconBg: "#ede9fe",
-    iconColor: "#6d28d9",
-    change: "1 live now",
-    changeDir: "up",
-  },
-  {
-    id: "plots-featured",
-    label: "Featured Plots",
-    value: "4",
-    icon: "fa-crown",
-    iconBg: "rgba(197,138,35,0.1)",
-    iconColor: "#c58a23",
-    change: "Across all categories",
-    changeDir: "up",
-  },
-  {
-    id: "categories",
-    label: "Categories",
-    value: "4",
-    icon: "fa-tag",
-    iconBg: "#f0fdf4",
-    iconColor: "#15803d",
-    change: "Plots, Land, Res, Com",
-    changeDir: "up",
-  },
-];
-
-const recentPlots = [
-  { id: "p1", title: "Lakeview Township", category: "plots", price: "₹ 45 Lakh", status: "Fast Selling", featured: true },
-  { id: "l1", title: "Bhoomi Hills", category: "land", price: "₹ 2.5 Cr", status: "High Appreciation", featured: true },
-  { id: "r1", title: "Premium Bungalow", category: "residential", price: "₹ 1.27 Cr", status: "RERA Approved", featured: true },
-  { id: "c1", title: "Horizon IT Park", category: "commercial", price: "₹ 3.5 Cr", status: "Under Construction", featured: true },
-];
+import { getPlots, getBanners, PlotData, BannerData } from "../../lib/api";
 
 const categoryChipClass: Record<string, string> = {
   plots: "chip chip-plots",
@@ -63,6 +13,76 @@ const categoryChipClass: Record<string, string> = {
 
 export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [plots, setPlots] = useState<PlotData[]>([]);
+  const [banners, setBanners] = useState<BannerData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        setLoading(true);
+        const [plotsData, bannersData] = await Promise.all([
+          getPlots().catch(() => []),
+          getBanners().catch(() => []),
+        ]);
+        setPlots(plotsData);
+        setBanners(bannersData);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
+  const totalPlots = plots.length;
+  const activeBanners = banners.filter((b) => b.isActive).length;
+  const featuredPlots = plots.filter((p) => p.isFeatured).length;
+  const uniqueCategories = new Set(plots.map((p) => p.category)).size;
+
+  const stats = [
+    {
+      id: "total-plots",
+      label: "Total Plots",
+      value: loading ? "..." : String(totalPlots),
+      icon: "fa-layer-group",
+      iconBg: "#fef3c7",
+      iconColor: "#92400e",
+      change: `${totalPlots} active in DB`,
+      changeDir: "up",
+    },
+    {
+      id: "active-banners",
+      label: "Active Banners",
+      value: loading ? "..." : String(activeBanners),
+      icon: "fa-rectangle-ad",
+      iconBg: "#ede9fe",
+      iconColor: "#6d28d9",
+      change: activeBanners > 0 ? "Live on Landing Page" : "None active",
+      changeDir: activeBanners > 0 ? "up" : "down",
+    },
+    {
+      id: "plots-featured",
+      label: "Featured Plots",
+      value: loading ? "..." : String(featuredPlots),
+      icon: "fa-crown",
+      iconBg: "rgba(197,138,35,0.1)",
+      iconColor: "#c58a23",
+      change: "Highlighted with crown",
+      changeDir: "up",
+    },
+    {
+      id: "categories",
+      label: "Categories in Use",
+      value: loading ? "..." : String(uniqueCategories || 4),
+      icon: "fa-tag",
+      iconBg: "#f0fdf4",
+      iconColor: "#15803d",
+      change: "Plots, Land, Res, Com",
+      changeDir: "up",
+    },
+  ];
+
+  const recentPlots = plots.slice(0, 5);
 
   return (
     <>
@@ -98,7 +118,7 @@ export default function DashboardPage() {
               Good day, Admin 👋
             </h2>
             <p style={{ fontSize: "0.85rem", color: "#94a3b8" }}>
-              Manage your property listings and banner ads from here.
+              Live connection active with MongoDB &amp; Cloudinary.
             </p>
           </div>
           <div style={{ display: "flex", gap: "10px" }}>
@@ -146,7 +166,9 @@ export default function DashboardPage() {
           <div className="admin-card-header">
             <div>
               <div className="admin-card-title">Recent Listings</div>
-              <div className="admin-card-subtitle">Last added plot entries</div>
+              <div className="admin-card-subtitle">
+                {loading ? "Loading listings..." : `Showing ${recentPlots.length} recent entries`}
+              </div>
             </div>
             <Link href="/dashboard/plots" className="btn btn-ghost btn-sm" id="dash-view-all-plots">
               View all <i className="fas fa-arrow-right" style={{ fontSize: "0.7rem" }}></i>
@@ -154,57 +176,56 @@ export default function DashboardPage() {
           </div>
 
           <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Property</th>
-                  <th>Category</th>
-                  <th>Price</th>
-                  <th>Status</th>
-                  <th>Featured</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentPlots.map((plot) => (
-                  <tr key={plot.id}>
-                    <td>
-                      <span className="table-title">{plot.title}</span>
-                    </td>
-                    <td>
-                      <span className={categoryChipClass[plot.category] || "chip"}>
-                        {plot.category}
-                      </span>
-                    </td>
-                    <td>
-                      <span style={{ fontWeight: 700, color: "var(--primary)" }}>{plot.price}</span>
-                    </td>
-                    <td>
-                      <span className="badge badge-green">{plot.status}</span>
-                    </td>
-                    <td>
-                      {plot.featured ? (
-                        <span className="badge badge-gold">
-                          <i className="fas fa-crown" style={{ fontSize: "0.6rem" }}></i> Yes
-                        </span>
-                      ) : (
-                        <span className="badge badge-slate">No</span>
-                      )}
-                    </td>
-                    <td>
-                      <div className="table-actions">
-                        <button className="btn btn-icon btn-icon-edit" aria-label="Edit plot" title="Edit">
-                          <i className="fas fa-pen-to-square"></i>
-                        </button>
-                        <button className="btn btn-icon btn-icon-delete" aria-label="Delete plot" title="Delete">
-                          <i className="fas fa-trash-can"></i>
-                        </button>
-                      </div>
-                    </td>
+            {recentPlots.length === 0 ? (
+              <div style={{ padding: "40px 20px", textAlign: "center", color: "var(--text-muted)", fontSize: "0.88rem" }}>
+                {loading ? "Loading..." : "No property listings in database yet."}
+              </div>
+            ) : (
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Featured</th>
+                    <th>Location</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {recentPlots.map((plot) => (
+                    <tr key={plot._id}>
+                      <td>
+                        <span className="table-title">{plot.title}</span>
+                      </td>
+                      <td>
+                        <span className={categoryChipClass[plot.category] || "chip"}>
+                          {plot.category}
+                        </span>
+                      </td>
+                      <td>
+                        <span style={{ fontWeight: 700, color: "var(--primary)" }}>{plot.price}</span>
+                      </td>
+                      <td>
+                        <span className="badge badge-green">{plot.status}</span>
+                      </td>
+                      <td>
+                        {plot.isFeatured ? (
+                          <span className="badge badge-gold">
+                            <i className="fas fa-crown" style={{ fontSize: "0.6rem" }}></i> Yes
+                          </span>
+                        ) : (
+                          <span className="badge badge-slate">No</span>
+                        )}
+                      </td>
+                      <td>
+                        <span style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>{plot.location}</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
 

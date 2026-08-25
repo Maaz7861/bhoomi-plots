@@ -1,24 +1,54 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export interface BannerAdProps {
-  imageUrl?: string;
-  badgeText?: string;
-  title?: string;
-  subtitle?: string;
-  ctaText?: string;
-  link?: string;
+  initialImageUrl?: string;
+  initialBadgeText?: string;
+  initialTitle?: string;
+  initialSubtitle?: string;
+  initialCtaText?: string;
+  initialLink?: string;
 }
 
 export function BannerAd({
-  imageUrl = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&auto=format&fit=crop&q=80",
-  badgeText = "Limited Period Pre-Launch Offer",
-  title = "Explore Prime NA Plots with Lakefront & Hill Views",
-  subtitle = "RERA-approved gated plotted developments with tar roads, water, electricity & modern clubhouse amenities near prime IT corridors.",
-  ctaText = "Explore Premium Plots",
-  link = "/projects?tab=plots",
+  initialImageUrl = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&auto=format&fit=crop&q=80",
+  initialBadgeText = "Limited Period Pre-Launch Offer",
+  initialTitle = "Explore Prime NA Plots with Lakefront & Hill Views",
+  initialSubtitle = "RERA-approved gated plotted developments with tar roads, water, electricity & modern clubhouse amenities near prime IT corridors.",
+  initialCtaText = "Explore Premium Plots",
+  initialLink = "/projects?tab=plots",
 }: BannerAdProps) {
+  const [banner, setBanner] = useState<{
+    imageUrl: string;
+    ctaText: string;
+    link: string;
+  }>({
+    imageUrl: initialImageUrl,
+    ctaText: initialCtaText,
+    link: initialLink,
+  });
+
+  useEffect(() => {
+    async function fetchActiveBanner() {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+        const res = await fetch(`${apiUrl}/banners/active`, { cache: 'no-store' });
+        const data = await res.json();
+        if (data.success && data.data && data.data.imageUrl) {
+          setBanner({
+            imageUrl: data.data.imageUrl,
+            ctaText: data.data.ctaText || initialCtaText,
+            link: data.data.link || initialLink,
+          });
+        }
+      } catch {
+        // Graceful fallback to static banner if API is loading or offline
+      }
+    }
+    fetchActiveBanner();
+  }, [initialCtaText, initialLink]);
+
   return (
     <section className="banner-ad-section relative px-4 sm:px-6 lg:px-8 py-10 md:py-14 bg-[var(--bg-light)]">
       <div className="max-w-[1250px] mx-auto">
@@ -26,7 +56,7 @@ export function BannerAd({
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-            style={{ backgroundImage: `url("${imageUrl}")` }}
+            style={{ backgroundImage: `url("${banner.imageUrl}")` }}
           />
 
           {/* Dark Glass & Gradient Overlay */}
@@ -52,17 +82,17 @@ export function BannerAd({
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[rgba(197,138,35,0.2)] border border-[rgba(245,197,75,0.4)] text-[var(--accent-strong)] text-[0.72rem] md:text-[0.78rem] font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-md">
                 <i className="fas fa-sparkles text-[0.7rem]"></i>
-                <span>{badgeText}</span>
+                <span>{initialBadgeText}</span>
               </div>
 
               {/* Headline */}
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight tracking-tight mb-3">
-                {title}
+                {initialTitle}
               </h2>
 
               {/* Subtitle */}
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 max-w-xl opacity-90">
-                {subtitle}
+                {initialSubtitle}
               </p>
 
               {/* Highlights / Quick Perks */}
@@ -91,10 +121,10 @@ export function BannerAd({
             {/* Right Column: Call to Action */}
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full sm:w-auto shrink-0">
               <Link 
-                href={link}
+                href={banner.link}
                 className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-[0.95rem] text-slate-950 bg-gradient-to-r from-[#f5c54b] to-[#e39a2d] hover:from-[#e39a2d] hover:to-[#c58a23] shadow-lg shadow-amber-500/25 transition-all duration-300 hover:-translate-y-1 hover:shadow-amber-500/40"
               >
-                <span>{ctaText}</span>
+                <span>{banner.ctaText}</span>
                 <i className="fas fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1"></i>
               </Link>
               

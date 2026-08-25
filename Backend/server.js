@@ -12,6 +12,7 @@ const connectDB = require('./config/db');
 const authRoutes   = require('./routes/auth');
 const plotRoutes   = require('./routes/plots');
 const bannerRoutes = require('./routes/banners');
+const uploadRoutes = require('./routes/upload');
 
 const app = express();
 
@@ -60,6 +61,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
 app.use('/api/auth',    authRoutes);
 app.use('/api/plots',   plotRoutes);
 app.use('/api/banners', bannerRoutes);
+app.use('/api/upload',  uploadRoutes);
 
 // ── Health check ──────────────────────────────────────────────
 app.get('/health', (_req, res) => {

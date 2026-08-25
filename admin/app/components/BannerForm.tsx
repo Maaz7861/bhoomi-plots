@@ -1,12 +1,8 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { uploadImageFile, BannerData } from "../../lib/api";
 
-export interface BannerFormData {
-  imageUrl: string;
-  ctaText: string;
-  link: string;
-  isActive: boolean;
-}
+export type BannerFormData = Omit<BannerData, "_id" | "createdAt">;
 
 const EMPTY_FORM: BannerFormData = {
   imageUrl: "",
@@ -18,15 +14,33 @@ const EMPTY_FORM: BannerFormData = {
 interface BannerFormProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: (data: BannerFormData) => Promise<void>;
   initialData?: Partial<BannerFormData>;
   isEditing?: boolean;
 }
 
-export function BannerForm({ isOpen, onClose, initialData, isEditing = false }: BannerFormProps) {
+export function BannerForm({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialData,
+  isEditing = false,
+}: BannerFormProps) {
   const [form, setForm] = useState<BannerFormData>({ ...EMPTY_FORM, ...initialData });
   const [imagePreview, setImagePreview] = useState<string | null>(initialData?.imageUrl || null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setForm({ ...EMPTY_FORM, ...initialData });
+      setImagePreview(initialData?.imageUrl || null);
+      setUploadError(null);
+    }
+  }, [isOpen, initialData]);
 
   if (!isOpen) return null;
 
@@ -35,11 +49,29 @@ export function BannerForm({ isOpen, onClose, initialData, isEditing = false }: 
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleFilePick = (file: File) => {
-    if (!file.type.startsWith("image/")) return;
-    const url = URL.createObjectURL(file);
-    setImagePreview(url);
-    setForm((f) => ({ ...f, imageUrl: url })); // replaced with Cloudinary URL on submit
+  const handleFilePick = async (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setUploadError("Please select a valid image file.");
+      return;
+    }
+
+    setUploadError(null);
+    setIsUploading(true);
+
+    const localUrl = URL.createObjectURL(file);
+    setImagePreview(localUrl);
+
+    try {
+      const cloudinaryUrl = await uploadImageFile(file);
+      setImagePreview(cloudinaryUrl);
+      setForm((f) => ({ ...f, imageUrl: cloudinaryUrl }));
+    } catch (err: any) {
+      setUploadError(err.message || "Failed to upload image to Cloudinary.");
+      setImagePreview(initialData?.imageUrl || null);
+      setForm((f) => ({ ...f, imageUrl: initialData?.imageUrl || "" }));
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,28 +84,60 @@ export function BannerForm({ isOpen, onClose, initialData, isEditing = false }: 
     if (e.dataTransfer.files?.[0]) handleFilePick(e.dataTransfer.files[0]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // API call will be wired here (upload to Cloudinary then save URL to DB)
-    console.log("Banner form data:", form);
-    onClose();
+    if (!form.imageUrl) {
+      setUploadError("Please upload a banner image before submitting.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setUploadError(null);
+
+    try {
+      await onSubmit(form);
+      onClose();
+    } catch (err: any) {
+      setUploadError(err.message || "Failed to save banner.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="modal-backdrop" onClick={(e) => e.target === e.currentTarget && !isSubmitting && onClose()}>
       <div className="modal-drawer" role="dialog" aria-modal="true" aria-label={isEditing ? "Edit Banner" : "Add Banner"}>
         {/* Header */}
         <div className="modal-header">
           <div className="modal-title">
             {isEditing ? "Edit Banner Ad" : "Add New Banner Ad"}
           </div>
-          <button className="modal-close" onClick={onClose} aria-label="Close">
+          <button className="modal-close" onClick={onClose} disabled={isSubmitting} aria-label="Close">
             <i className="fas fa-xmark"></i>
           </button>
         </div>
 
         <form onSubmit={handleSubmit} id="banner-form">
           <div className="modal-body">
+
+            {uploadError && (
+              <div
+                style={{
+                  background: "rgba(230, 57, 70, 0.12)",
+                  border: "1px solid rgba(230, 57, 70, 0.3)",
+                  borderRadius: "var(--radius-sm)",
+                  padding: "10px 14px",
+                  color: "#ef4444",
+                  fontSize: "0.82rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <i className="fas fa-circle-exclamation"></i>
+                <span>{uploadError}</span>
+              </div>
+            )}
 
             {/* Image upload */}
             <div className="form-group">
@@ -87,6 +151,7 @@ export function BannerForm({ isOpen, onClose, initialData, isEditing = false }: 
                 style={{ display: "none" }}
                 id="banner-image-input"
                 onChange={handleFileInput}
+                disabled={isUploading}
               />
               {imagePreview ? (
                 <div style={{ position: "relative", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
@@ -99,55 +164,81 @@ export function BannerForm({ isOpen, onClose, initialData, isEditing = false }: 
                       objectFit: "cover",
                       borderRadius: "var(--radius-sm)",
                       display: "block",
+                      opacity: isUploading ? 0.5 : 1,
                     }}
                   />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "rgba(0,0,0,0.4)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    <button
-                      type="button"
-                      className="btn btn-ghost btn-sm"
-                      style={{ background: "rgba(255,255,255,0.9)", color: "var(--text-dark)" }}
-                      onClick={() => fileInputRef.current?.click()}
+                  {isUploading ? (
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "rgba(0,0,0,0.5)",
+                        color: "white",
+                        gap: "8px",
+                      }}
                     >
-                      <i className="fas fa-arrow-up-from-bracket"></i> Change
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                      onClick={() => { setImagePreview(null); setForm((f) => ({ ...f, imageUrl: "" })); }}
+                      <div className="spinner" style={{ width: "24px", height: "24px" }}></div>
+                      <span style={{ fontSize: "0.78rem" }}>Uploading to Cloudinary...</span>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "rgba(0,0,0,0.4)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "10px",
+                        opacity: 0,
+                        transition: "opacity 0.2s",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                      onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
                     >
-                      <i className="fas fa-trash-can"></i> Remove
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-sm"
+                        style={{ background: "rgba(255,255,255,0.9)", color: "var(--text-dark)" }}
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        <i className="fas fa-arrow-up-from-bracket"></i> Change
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm"
+                        onClick={() => {
+                          setImagePreview(null);
+                          setForm((f) => ({ ...f, imageUrl: "" }));
+                        }}
+                      >
+                        <i className="fas fa-trash-can"></i> Remove
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div
                   className={`upload-zone ${dragOver ? "drag-over" : ""}`}
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={() => !isUploading && fileInputRef.current?.click()}
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                   onDragLeave={() => setDragOver(false)}
                   onDrop={handleDrop}
                   style={{ minHeight: "160px" }}
                 >
                   <div className="upload-zone-icon">
-                    <i className="fas fa-image"></i>
+                    {isUploading ? <div className="spinner"></div> : <i className="fas fa-image"></i>}
                   </div>
                   <p className="upload-zone-text">
                     <strong>Click to upload</strong> or drag &amp; drop
                   </p>
-                  <p className="upload-zone-sub">Recommended: 1440 × 500 px, max 5 MB</p>
+                  <p className="upload-zone-sub">Uploads directly to Cloudinary (Recommended: 1440 × 500 px)</p>
                 </div>
               )}
-              <p className="form-hint">Image will be uploaded to Cloudinary. Use a wide landscape image for best results.</p>
             </div>
 
             {/* CTA Text */}
@@ -213,38 +304,25 @@ export function BannerForm({ isOpen, onClose, initialData, isEditing = false }: 
                 id="banner-active-toggle"
               />
             </div>
-
-            {/* Info note */}
-            <div
-              style={{
-                background: "var(--info-soft)",
-                border: "1px solid var(--info-border)",
-                borderRadius: "var(--radius-sm)",
-                padding: "12px 14px",
-                fontSize: "0.8rem",
-                color: "#1d4ed8",
-                display: "flex",
-                gap: "8px",
-                alignItems: "flex-start",
-              }}
-            >
-              <i className="fas fa-circle-info" style={{ marginTop: "2px", flexShrink: 0 }}></i>
-              <span>
-                The banner appears between the <strong>Hero</strong> and the{" "}
-                <strong>Why Choose Us</strong> section on the landing page. Activating a new banner
-                will deactivate the current one.
-              </span>
-            </div>
           </div>
 
           {/* Footer */}
           <div className="modal-footer">
-            <button type="button" className="btn btn-ghost" onClick={onClose} id="banner-form-cancel">
+            <button type="button" className="btn btn-ghost" onClick={onClose} disabled={isSubmitting || isUploading} id="banner-form-cancel">
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary" id="banner-form-submit">
-              <i className={`fas ${isEditing ? "fa-floppy-disk" : "fa-plus"}`}></i>
-              {isEditing ? "Save Changes" : "Add Banner"}
+            <button type="submit" className="btn btn-primary" id="banner-form-submit" disabled={isSubmitting || isUploading}>
+              {isSubmitting ? (
+                <>
+                  <span className="spinner" style={{ marginRight: "6px" }}></span>
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <i className={`fas ${isEditing ? "fa-floppy-disk" : "fa-plus"}`}></i>
+                  {isEditing ? "Save Changes" : "Add Banner"}
+                </>
+              )}
             </button>
           </div>
         </form>
