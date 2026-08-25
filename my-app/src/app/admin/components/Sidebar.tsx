@@ -76,14 +76,15 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       <aside className={`admin-sidebar ${isOpen ? "open" : ""}`} aria-label="Admin Navigation">
         {/* Logo & Mobile Close */}
         <div className="sidebar-logo">
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1 }}>
-            <div className="sidebar-logo-icon">
-              <i className="fas fa-building" style={{ color: "#0f172a", fontSize: "1rem" }}></i>
-            </div>
-            <div className="sidebar-logo-text">
-              <span className="sidebar-logo-name">Bhoomi Group</span>
-              <span className="sidebar-logo-sub">Admin Portal</span>
-            </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+            <img
+              src="/assets/images/bhoomi-logo-white-1-1536x526.png"
+              alt="Bhoomi Group"
+              style={{ height: "32px", width: "auto", objectFit: "contain", alignSelf: "flex-start" }}
+            />
+            <span className="sidebar-logo-sub" style={{ fontSize: "0.62rem", letterSpacing: "0.1em", color: "var(--accent-strong)", fontWeight: 700 }}>
+              ADMIN PORTAL
+            </span>
           </div>
 
           {/* Close button on mobile/tablet */}

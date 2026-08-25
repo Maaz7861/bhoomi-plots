@@ -30,13 +30,14 @@ export default function AdminLoginPage() {
     <div className="auth-page">
       <div className="auth-card">
         {/* Logo */}
-        <div className="auth-logo">
-          <div className="auth-logo-icon">
-            <i className="fas fa-building"></i>
-          </div>
-          <div>
-            <div className="auth-logo-name">Bhoomi</div>
-            <div className="auth-logo-sub">Admin Portal</div>
+        <div className="auth-logo" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "6px", marginBottom: "22px" }}>
+          <img
+            src="/assets/images/bhoomi-logo-white-1-1536x526.png"
+            alt="Bhoomi Group"
+            style={{ height: "46px", width: "auto", objectFit: "contain" }}
+          />
+          <div className="auth-logo-sub" style={{ letterSpacing: "0.12em", fontWeight: 700, color: "var(--accent-strong)", fontSize: "0.72rem" }}>
+            ADMIN PORTAL
           </div>
         </div>
 
