@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { uploadImageFile, PlotData } from "@/lib/api";
+import { CustomSelect } from "./CustomSelect";
 
 export type PlotFormData = Omit<PlotData, "_id" | "createdAt">;
 
@@ -242,20 +243,43 @@ export function PlotForm({
             {/* Category + Status */}
             <div className="form-grid-2">
               <div className="form-group">
-                <label className="form-label" htmlFor="plot-category">Category <span className="required">*</span></label>
-                <select id="plot-category" name="category" className="form-select" value={form.category} onChange={handleChange} required>
-                  <option value="plots">Plots</option>
-                  <option value="land">Land</option>
-                  <option value="residential">Residential</option>
-                  <option value="commercial">Commercial</option>
-                </select>
+                <label className="form-label" htmlFor="plot-category">
+                  Category <span className="required">*</span>
+                </label>
+                <CustomSelect
+                  id="plot-category"
+                  value={form.category}
+                  onChange={(val) => setForm((f) => ({ ...f, category: val }))}
+                  options={[
+                    { value: "residential", label: "Residential", icon: "fa-house" },
+                    { value: "commercial", label: "Commercial", icon: "fa-building" },
+                    { value: "plots", label: "Plots", icon: "fa-map" },
+                    { value: "land", label: "Land", icon: "fa-tree" },
+                  ]}
+                />
               </div>
+
               <div className="form-group">
-                <label className="form-label" htmlFor="plot-status">Status <span className="required">*</span></label>
-                <select id="plot-status" name="status" className="form-select" value={form.status} onChange={handleChange} required>
-                  <option value="">Select status</option>
-                  {STATUS_OPTIONS.map((s) => (<option key={s} value={s}>{s}</option>))}
-                </select>
+                <label className="form-label" htmlFor="plot-status">
+                  Status <span className="required">*</span>
+                </label>
+                <CustomSelect
+                  id="plot-status"
+                  value={form.status}
+                  onChange={(val) => setForm((f) => ({ ...f, status: val }))}
+                  placeholder="Select status"
+                  options={STATUS_OPTIONS.map((s) => ({
+                    value: s,
+                    label: s,
+                    icon: s.toLowerCase().includes("ready")
+                      ? "fa-circle-check"
+                      : s.toLowerCase().includes("selling")
+                      ? "fa-fire"
+                      : s.toLowerCase().includes("new")
+                      ? "fa-wand-magic-sparkles"
+                      : "fa-building",
+                  }))}
+                />
               </div>
             </div>
 

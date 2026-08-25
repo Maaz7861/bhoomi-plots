@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useAdmin } from "./AdminContext";
 
 interface TopbarProps {
   title: string;
@@ -8,16 +9,26 @@ interface TopbarProps {
 }
 
 export function Topbar({ title, breadcrumb, onMenuToggle }: TopbarProps) {
+  let contextToggle: (() => void) | undefined;
+  try {
+    const admin = useAdmin();
+    contextToggle = admin.toggleSidebar;
+  } catch {
+    // Topbar rendered outside AdminProvider fallback
+  }
+
+  const handleToggle = onMenuToggle || contextToggle;
+
   return (
     <header className="admin-topbar">
       <div className="topbar-left">
-        {/* Mobile menu toggle */}
+        {/* Mobile / Tablet menu toggle */}
         <button
-          className="topbar-icon-btn"
-          style={{ display: "flex" }}
-          onClick={onMenuToggle}
-          aria-label="Toggle sidebar"
+          className="topbar-icon-btn topbar-menu-btn"
+          onClick={handleToggle}
+          aria-label="Toggle Navigation Menu"
           id="topbar-menu-toggle"
+          type="button"
         >
           <i className="fas fa-bars"></i>
         </button>
@@ -33,23 +44,23 @@ export function Topbar({ title, breadcrumb, onMenuToggle }: TopbarProps) {
       </div>
 
       <div className="topbar-right">
-        {/* Notifications placeholder */}
-        <button
-          className="topbar-icon-btn"
-          aria-label="Notifications"
-          id="topbar-notifications-btn"
-        >
-          <i className="fas fa-bell"></i>
-        </button>
+        {/* Status Pill */}
+        <div className="topbar-status-pill">
+          <span className="status-dot"></span>
+          <span className="status-text">Atlas Live</span>
+        </div>
 
-        {/* Help */}
-        <button
+        {/* Live Site Link */}
+        <a
+          href="/Home"
+          target="_blank"
+          rel="noopener noreferrer"
           className="topbar-icon-btn"
-          aria-label="Help"
-          id="topbar-help-btn"
+          title="Open Customer Landing Page"
+          id="topbar-view-site-btn"
         >
-          <i className="fas fa-circle-question"></i>
-        </button>
+          <i className="fas fa-arrow-up-right-from-square"></i>
+        </a>
       </div>
     </header>
   );

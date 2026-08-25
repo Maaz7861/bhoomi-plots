@@ -40,10 +40,6 @@ export function ProjectCard({ project, onViewClick }: ProjectCardProps) {
 
       {/* Image Container */}
       <div className="relative h-[200px] w-full overflow-hidden shrink-0">
-        <div className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm cursor-pointer hover:bg-white hover:scale-110 transition-transform duration-300">
-          <i className={`${project.isLiked ? 'fas' : 'far'} fa-heart ${project.isLiked ? 'text-red-500' : 'text-slate-600'} text-[0.95rem]`}></i>
-        </div>
-        
         <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 items-end">
           {project.isFeatured && (
             <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent-strong)] text-white text-[0.7rem] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1">

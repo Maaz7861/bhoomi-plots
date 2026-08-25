@@ -2,10 +2,21 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "../components/Sidebar";
+import { AdminProvider, useAdmin } from "../components/AdminContext";
 import { getToken } from "@/lib/api";
 
+function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
+  const { sidebarOpen, closeSidebar } = useAdmin();
+
+  return (
+    <div className="admin-shell">
+      <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+      <div className="admin-main">{children}</div>
+    </div>
+  );
+}
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const router = useRouter();
 
@@ -39,9 +50,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="admin-shell">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="admin-main">{children}</div>
-    </div>
+    <AdminProvider>
+      <DashboardLayoutContent>{children}</DashboardLayoutContent>
+    </AdminProvider>
   );
 }

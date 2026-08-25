@@ -43,7 +43,7 @@ const navSections: NavSection[] = [
   },
 ];
 
-export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
+export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [adminUser, setAdminUser] = useState<{ name: string; email: string; role: string } | null>(null);
@@ -64,27 +64,40 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile overlay */}
+      {/* Mobile Backdrop Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          className="sidebar-backdrop"
           onClick={onClose}
+          aria-hidden="true"
         />
       )}
 
-      <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
-        {/* Logo */}
+      <aside className={`admin-sidebar ${isOpen ? "open" : ""}`} aria-label="Admin Navigation">
+        {/* Logo & Mobile Close */}
         <div className="sidebar-logo">
-          <div className="sidebar-logo-icon">
-            <i className="fas fa-building" style={{ color: "#0f172a", fontSize: "1rem" }}></i>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1 }}>
+            <div className="sidebar-logo-icon">
+              <i className="fas fa-building" style={{ color: "#0f172a", fontSize: "1rem" }}></i>
+            </div>
+            <div className="sidebar-logo-text">
+              <span className="sidebar-logo-name">Bhoomi Group</span>
+              <span className="sidebar-logo-sub">Admin Portal</span>
+            </div>
           </div>
-          <div className="sidebar-logo-text">
-            <span className="sidebar-logo-name">Bhoomi Group</span>
-            <span className="sidebar-logo-sub">Admin Portal</span>
-          </div>
+
+          {/* Close button on mobile/tablet */}
+          <button
+            className="sidebar-close-btn"
+            onClick={onClose}
+            aria-label="Close Sidebar"
+            type="button"
+          >
+            <i className="fas fa-xmark"></i>
+          </button>
         </div>
 
-        {/* Nav */}
+        {/* Navigation Sections */}
         <nav className="sidebar-nav">
           {navSections.map((section) => (
             <div key={section.label}>
@@ -108,24 +121,26 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           ))}
         </nav>
 
-        {/* Footer — user info */}
+        {/* Footer info & Logout */}
         <div className="sidebar-footer">
-          {/* Visit Site */}
+          {/* Visit Public Site */}
           <Link
             href="/Home"
             className="sidebar-link"
             style={{ marginBottom: "4px" }}
+            onClick={onClose}
           >
             <i className="fas fa-arrow-up-right-from-square"></i>
             <span>View Live Site</span>
           </Link>
 
-          {/* Logout */}
+          {/* Logout Button */}
           <button
             className="sidebar-link"
             style={{ color: "#f87171" }}
             onClick={handleLogout}
             id="sidebar-logout-btn"
+            type="button"
           >
             <i className="fas fa-right-from-bracket"></i>
             <span>Logout</span>
@@ -133,7 +148,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
           <div style={{ height: "10px" }} />
 
-          {/* User chip */}
+          {/* User Profile Chip */}
           <div className="sidebar-user">
             <div className="sidebar-avatar">
               {adminUser?.name ? adminUser.name.charAt(0).toUpperCase() : "A"}
