@@ -6,15 +6,13 @@ import { ProjectModal } from './ProjectModal';
 
 type Tab = 'plots' | 'land' | 'residential' | 'commercial';
 
-// India-specific and context-accurate images
-const projectsData: Record<Tab, Project[]> = {
+// Fallback initial data if database is empty or offline
+const fallbackProjectsData: Record<Tab, Project[]> = {
   plots: [
     {
       id: 'p1',
       image: '/projects/plot.jpg',
-      gallery: [
-        '/projects/plot.jpg'
-      ],
+      gallery: ['/projects/plot.jpg'],
       title: 'Lakeview Township',
       price: '₹ 45 Lakh',
       subPrice: 'Starting Price',
@@ -43,20 +41,6 @@ const projectsData: Record<Tab, Project[]> = {
       status: 'Limited Inventory',
       reraNumber: 'P52100067890',
     },
-    {
-      id: 'p3',
-      image: '/projects/plot.jpg',
-      title: 'Green Meadows Plots',
-      price: '₹ 28 Lakh',
-      subPrice: 'Starting Price',
-      features: '800 sq.ft • 1500 sq.ft • NA Plots',
-      description: 'Budget-friendly clear-title NA plots with internal tar roads and electricity connections.',
-      location: 'Shirwal, Pune',
-      developer: 'Bhoomi Projects',
-      developerVerified: true,
-      status: 'New Launch',
-      reraNumber: 'P52100055443',
-    },
   ],
   land: [
     {
@@ -74,43 +58,12 @@ const projectsData: Record<Tab, Project[]> = {
       reraNumber: 'P51600022334',
       isFeatured: true,
     },
-    {
-      id: 'l2',
-      image: '/projects/land.jpg',
-      title: 'Agro Estates',
-      price: '₹ 1.2 Cr',
-      subPrice: 'Per Acre',
-      features: 'Agricultural • Water Access',
-      description: 'Fertile agricultural land with water access, suitable for plantations and agro‑tourism concepts.',
-      location: 'Satara',
-      developer: 'Bhoomi Projects',
-      developerVerified: true,
-      status: 'Phase 1 Open',
-      reraNumber: 'P52700011223',
-    },
-    {
-      id: 'l3',
-      image: '/projects/land.jpg',
-      title: 'Coastal Reserves',
-      price: '₹ 3.8 Cr',
-      subPrice: 'Per Acre',
-      features: 'Coastal Regulation Zone • Resort Potential',
-      description: 'Prime land parcel near the konkan coast. Perfect for luxury resort development or private estates.',
-      location: 'Alibaug, Maharashtra',
-      developer: 'Bhoomi Projects',
-      developerVerified: true,
-      status: 'Exclusive Listing',
-      reraNumber: 'P52000044556',
-      isFeatured: true,
-    }
   ],
   residential: [
     {
       id: 'r1',
       image: '/projects/residential.jpg',
-      gallery: [
-        '/projects/residential.jpg'
-      ],
+      gallery: ['/projects/residential.jpg'],
       title: 'Premium Bungalow',
       price: '₹ 1.27 Cr',
       subPrice: '₹ 1.15 Cr Approx',
@@ -122,49 +75,13 @@ const projectsData: Record<Tab, Project[]> = {
       status: 'RERA Approved',
       reraNumber: 'P52100088990',
       isFeatured: true,
-      hasVideo: true,
-    },
-    {
-      id: 'r2',
-      image: '/projects/residential.jpg',
-      gallery: [
-        '/projects/residential.jpg'
-      ],
-      title: 'Riverfront Residency',
-      price: '₹ 92 Lakh',
-      subPrice: '₹ 85 Lakh Approx',
-      features: '2 Bds • 2 Ba • 910 sqft',
-      description: 'Ready-to-move 2 BHK apartment in a gated society with clubhouse.',
-      location: 'Baner, Pune',
-      developer: 'Riverfront Residency',
-      developerVerified: true,
-      status: 'Ready to Move',
-      reraNumber: 'P52100077889',
-      isLiked: true,
-    },
-    {
-      id: 'r3',
-      image: '/projects/residential.jpg',
-      title: 'Skyline Homes',
-      price: '₹ 78 Lakh',
-      subPrice: '₹ 72 Lakh Approx',
-      features: '2 Bds • 2 Ba • 840 sqft',
-      description: 'Compact and well-ventilated 2 BHK close to IT parks and malls.',
-      location: 'Kharadi, Pune',
-      developer: 'Skyline Homes',
-      developerVerified: true,
-      status: 'Under Construction',
-      reraNumber: 'P52100066778',
-      isLiked: true,
     },
   ],
   commercial: [
     {
       id: 'c1',
       image: '/projects/commercial.jpg',
-      gallery: [
-        '/projects/commercial.jpg'
-      ],
+      gallery: ['/projects/commercial.jpg'],
       title: 'Horizon IT Park',
       price: '₹ 3.5 Cr',
       subPrice: 'Starting Price',
@@ -177,35 +94,7 @@ const projectsData: Record<Tab, Project[]> = {
       reraNumber: 'P52100033445',
       isFeatured: true,
     },
-    {
-      id: 'c2',
-      image: '/projects/commercial.jpg',
-      title: 'Retail Hub',
-      price: '₹ 1.8 Cr',
-      subPrice: 'Starting Price',
-      features: 'Shops • Showrooms • High Footfall',
-      description: 'High footfall retail spaces in the fastest growing commercial corridor.',
-      location: 'Hinjewadi Phase 1, Pune',
-      developer: 'Bhoomi Commercials',
-      developerVerified: true,
-      status: 'Pre-launch Offers',
-      reraNumber: 'P52100022334',
-    },
-    {
-      id: 'c3',
-      image: '/projects/commercial.jpg',
-      title: 'Apex Business Center',
-      price: '₹ 85 Lakh',
-      subPrice: 'Starting Price',
-      features: 'Boutique Offices • Co-working',
-      description: 'Smart boutique offices tailored for startups and medium-sized enterprises.',
-      location: 'Viman Nagar, Pune',
-      developer: 'Bhoomi Commercials',
-      developerVerified: true,
-      status: 'Ready to Move',
-      reraNumber: 'P52100011223',
-    }
-  ]
+  ],
 };
 
 function ProjectsTabsContent() {
@@ -214,6 +103,7 @@ function ProjectsTabsContent() {
 
   const [activeTab, setActiveTab] = useState<Tab>('plots');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [livePlots, setLivePlots] = useState<Record<Tab, Project[]>>(fallbackProjectsData);
 
   useEffect(() => {
     if (tabParam && ['plots', 'land', 'residential', 'commercial'].includes(tabParam)) {
@@ -221,12 +111,66 @@ function ProjectsTabsContent() {
     }
   }, [tabParam]);
 
+  useEffect(() => {
+    async function fetchLivePlots() {
+      try {
+        const res = await fetch('/api/plots', { cache: 'no-store' });
+        const data = await res.json();
+        if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+          const categorized: Record<Tab, Project[]> = {
+            plots: [],
+            land: [],
+            residential: [],
+            commercial: [],
+          };
+
+          data.data.forEach((item: any) => {
+            const cat = item.category as Tab;
+            if (categorized[cat]) {
+              categorized[cat].push({
+                id: item._id,
+                title: item.title,
+                image: item.imageUrl || `/projects/${cat === 'residential' ? 'residential' : cat === 'commercial' ? 'commercial' : cat === 'land' ? 'land' : 'plot'}.jpg`,
+                gallery: [item.imageUrl || '/projects/plot.jpg'],
+                price: item.price,
+                priceRange: item.priceRange || '',
+                bhk: item.bhk || '',
+                subPrice: 'Starting Price',
+                features: item.features || '',
+                description: item.description || '',
+                location: item.location || '',
+                developer: item.developer || 'Bhoomi Projects',
+                developerVerified: true,
+                status: item.status || 'Verified',
+                reraNumber: item.reraNumber || '',
+                isFeatured: !!item.isFeatured,
+              });
+            }
+          });
+
+          // Only override categories that have items in DB, otherwise retain fallback
+          setLivePlots((prev) => ({
+            plots: categorized.plots.length > 0 ? categorized.plots : prev.plots,
+            land: categorized.land.length > 0 ? categorized.land : prev.land,
+            residential: categorized.residential.length > 0 ? categorized.residential : prev.residential,
+            commercial: categorized.commercial.length > 0 ? categorized.commercial : prev.commercial,
+          }));
+        }
+      } catch {
+        // Fallback gracefully to static data
+      }
+    }
+    fetchLivePlots();
+  }, []);
+
   const tabs: { id: Tab; label: string }[] = [
     { id: 'plots', label: 'Plots' },
     { id: 'land', label: 'Land' },
     { id: 'residential', label: 'Residentials' },
     { id: 'commercial', label: 'Commercials' },
   ];
+
+  const currentProjects = livePlots[activeTab] || [];
 
   return (
     <>
@@ -252,7 +196,7 @@ function ProjectsTabsContent() {
 
           {/* Tab Content Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-            {projectsData[activeTab].map((project) => (
+            {currentProjects.map((project) => (
               <ProjectCard 
                 key={project.id} 
                 project={project} 

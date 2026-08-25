@@ -6,11 +6,13 @@ export interface Project {
   gallery?: string[];
   title: string;
   price: string;
+  priceRange?: string;
+  bhk?: string;
   subPrice?: string;
   features?: string;
   description: string;
   location: string;
-  developer: string;
+  developer?: string;
   developerVerified?: boolean;
   status: string;
   reraNumber?: string;
@@ -36,12 +38,8 @@ export function ProjectCard({ project, onViewClick }: ProjectCardProps) {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--primary)] to-[var(--accent-strong)] z-20"></div>
       )}
 
-      {/* Image Container - slightly shorter for compact look */}
+      {/* Image Container */}
       <div className="relative h-[200px] w-full overflow-hidden shrink-0">
-        <div className="absolute top-3 left-3 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm cursor-pointer hover:bg-white hover:scale-110 transition-transform duration-300">
-          <i className={`${project.isLiked ? 'fas' : 'far'} fa-heart ${project.isLiked ? 'text-red-500' : 'text-slate-600'} text-[0.95rem]`}></i>
-        </div>
-        
         <div className="absolute top-3 right-3 z-10 flex flex-col gap-2 items-end">
           {project.isFeatured && (
             <div className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent-strong)] text-white text-[0.7rem] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
@@ -63,14 +61,19 @@ export function ProjectCard({ project, onViewClick }: ProjectCardProps) {
         
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none opacity-80"></div>
         
-        <div className="absolute bottom-3 left-4 right-4 z-10 flex justify-between items-end">
+        <div className="absolute bottom-3 left-4 right-4 z-10 flex justify-between items-end gap-2">
            <div className="bg-white/95 backdrop-blur-md text-[var(--text-dark-strong)] text-[0.7rem] font-bold px-2.5 py-1 rounded shadow-sm">
             {project.status}
            </div>
+           {project.bhk && (
+             <div className="bg-[var(--primary)] text-white text-[0.7rem] font-bold px-2.5 py-1 rounded shadow-sm flex items-center gap-1">
+               <i className="fas fa-bed text-[0.65rem]"></i> {project.bhk}
+             </div>
+           )}
         </div>
       </div>
       
-      {/* Card Body - tighter padding */}
+      {/* Card Body */}
       <div className="p-4 flex flex-col flex-grow">
         
         {/* Title & Location Hierarchy */}
@@ -84,7 +87,7 @@ export function ProjectCard({ project, onViewClick }: ProjectCardProps) {
           </div>
         </div>
 
-        {/* Features Row - smaller badges */}
+        {/* Features Row */}
         {project.features && (
           <div className="flex flex-wrap gap-1.5 mb-3">
             {project.features.split('•').map((feature, i) => (
@@ -95,38 +98,39 @@ export function ProjectCard({ project, onViewClick }: ProjectCardProps) {
           </div>
         )}
 
-        {/* Description - smaller text */}
+        {/* Description */}
         <div className="text-[0.85rem] text-[var(--text-body)] mb-4 line-clamp-2 leading-relaxed opacity-90">
           {project.description}
         </div>
 
         <div className="mt-auto"></div>
 
-        {/* Pricing Area - cleaner, less bulky */}
+        {/* Pricing Area */}
         <div className="mb-4 flex justify-between items-end">
            <div>
-             <div className="text-[0.7rem] text-slate-400 font-medium mb-0.5 uppercase tracking-wide">Starting From</div>
-             <div className="text-[1.3rem] font-black text-[var(--primary)] leading-none">
-               {project.price}
+             <div className="text-[0.7rem] text-slate-400 font-medium mb-0.5 uppercase tracking-wide">
+               {project.priceRange ? 'Price Range' : 'Starting From'}
              </div>
+             <div className="text-[1.25rem] font-black text-[var(--primary)] leading-tight">
+               {project.priceRange ? project.priceRange : project.price}
+             </div>
+             {project.priceRange && project.price && project.price !== project.priceRange && (
+               <div className="text-[0.72rem] text-slate-500 font-medium mt-0.5">
+                 Starts at {project.price}
+               </div>
+             )}
            </div>
         </div>
         
-        {/* Footer: Developer & Button */}
+        {/* Footer: RERA & Button */}
         <div className="pt-3 border-t border-slate-100 flex flex-col gap-3">
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col gap-0.5">
-              <span className="flex items-center gap-1 text-[0.8rem] font-bold text-[var(--text-dark)]">
-                <i className="fas fa-building text-[var(--primary)] opacity-80 text-[0.75rem]"></i> {project.developer}
-                {project.developerVerified && <i className="fas fa-badge-check text-[var(--primary)] text-[0.75rem]"></i>}
+          {project.reraNumber && (
+            <div className="flex items-center justify-between">
+              <span className="text-[0.7rem] text-slate-500 flex items-center gap-1">
+                <i className="fas fa-file-shield text-emerald-500"></i> RERA: <code className="font-semibold text-slate-700">{project.reraNumber}</code>
               </span>
-              {project.reraNumber && (
-                <span className="text-[0.65rem] text-slate-500 flex items-center gap-1">
-                  <i className="fas fa-file-shield text-emerald-500"></i> RERA: {project.reraNumber}
-                </span>
-              )}
             </div>
-          </div>
+          )}
           
           <button 
             onClick={() => onViewClick(project)}

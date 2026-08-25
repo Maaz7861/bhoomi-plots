@@ -1,0 +1,730 @@
+openapi: 3.0.3
+
+info:
+  title: Bhoomi Plots API
+  description: |
+    REST API for the Bhoomi Plots admin CMS.
+
+    **Authentication**: All write operations (POST, PUT, DELETE) require a Bearer JWT token.
+    Obtain a token via `POST /api/auth/login`, then click **Authorize** and paste:
+    `Bearer <your_token>`
+
+    **Single Admin**: There is no register endpoint. One hardcoded admin account exists.
+    Default credentials (placeholder): `admin@bhoomigroup.com` / `Admin@1234`
+  version: 1.0.0
+  contact:
+    name: Bhoomi Admin
+    email: admin@bhoomigroup.com
+
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+
+# ── Security ──────────────────────────────────────────────────
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from POST /api/auth/login
+
+  # ── Reusable schemas ────────────────────────────────────────
+  schemas:
+
+    Plot:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "64f1a2b3c4d5e6f7a8b9c0d1"
+        title:
+          type: string
+          example: "Lakeview Township"
+        category:
+          type: string
+          enum: [plots, land, residential, commercial]
+          example: plots
+        price:
+          type: string
+          example: "₹ 45 Lakh"
+        location:
+          type: string
+          example: "Near Hinjewadi, Pune"
+        description:
+          type: string
+          example: "Plotted development with central park and lake promenade."
+        features:
+          type: string
+          example: "1200 sq.ft • 3000 sq.ft • Lake Front"
+        status:
+          type: string
+          example: "Fast Selling"
+        reraNumber:
+          type: string
+          example: "P52100012345"
+        developer:
+          type: string
+          example: "Bhoomi Projects"
+        imageUrl:
+          type: string
+          example: "https://res.cloudinary.com/your_cloud/image/upload/v1/plots/lakeview.jpg"
+        isFeatured:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    PlotInput:
+      type: object
+      required: [title, category, price, location, description, status]
+      properties:
+        title:
+          type: string
+          example: "Lakeview Township"
+        category:
+          type: string
+          enum: [plots, land, residential, commercial]
+          example: plots
+        price:
+          type: string
+          example: "₹ 45 Lakh"
+        location:
+          type: string
+          example: "Near Hinjewadi, Pune"
+        description:
+          type: string
+          example: "Plotted development with central park and lake promenade."
+        features:
+          type: string
+          example: "1200 sq.ft • 3000 sq.ft • Lake Front"
+        status:
+          type: string
+          example: "Fast Selling"
+        reraNumber:
+          type: string
+          example: "P52100012345"
+        developer:
+          type: string
+          example: "Bhoomi Projects"
+        imageUrl:
+          type: string
+          description: Cloudinary URL — upload the image from the admin UI first, then pass the URL here.
+          example: "https://res.cloudinary.com/your_cloud/image/upload/v1/plots/lakeview.jpg"
+        isFeatured:
+          type: boolean
+          example: false
+
+    Banner:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "64f1a2b3c4d5e6f7a8b9c0d2"
+        imageUrl:
+          type: string
+          example: "https://res.cloudinary.com/your_cloud/image/upload/v1/banners/promo.jpg"
+        ctaText:
+          type: string
+          example: "Explore Premium Plots →"
+        link:
+          type: string
+          example: "http://localhost:3000/projects"
+        isActive:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    BannerInput:
+      type: object
+      required: [imageUrl]
+      properties:
+        imageUrl:
+          type: string
+          description: Cloudinary URL — upload the image from the admin UI first, then pass the URL here.
+          example: "https://res.cloudinary.com/your_cloud/image/upload/v1/banners/promo.jpg"
+        ctaText:
+          type: string
+          example: "Explore Premium Plots →"
+        link:
+          type: string
+          example: "http://localhost:3000/projects"
+        isActive:
+          type: boolean
+          example: true
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          example: "admin@bhoomigroup.com"
+        password:
+          type: string
+          example: "Admin@1234"
+
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        admin:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Bhoomi Admin"
+            email:
+              type: string
+              example: "admin@bhoomigroup.com"
+            role:
+              type: string
+              example: "admin"
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Invalid credentials."
+
+# ── Paths ──────────────────────────────────────────────────────
+paths:
+
+  # ── Auth ────────────────────────────────────────────────────
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Admin login
+      description: |
+        Authenticates the single admin account.
+        Returns a signed JWT valid for the duration set in JWT_EXPIRES_IN (default 7d).
+        No register endpoint exists — this is the only auth route.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Missing email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Plots ────────────────────────────────────────────────────
+  /api/plots:
+    get:
+      tags: [Plots]
+      summary: Get all plots
+      description: Returns all plots, optionally filtered by category. Public endpoint.
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+            enum: [plots, land, residential, commercial]
+          required: false
+          description: Filter plots by category
+          example: plots
+      responses:
+        '200':
+          description: List of plots
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Plot'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Plots]
+      summary: Create a new plot
+      description: Creates a new plot listing. Requires JWT authentication.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlotInput'
+      responses:
+        '201':
+          description: Plot created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Plot'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized — missing or invalid JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/plots/{id}:
+    get:
+      tags: [Plots]
+      summary: Get a single plot
+      description: Returns a single plot by MongoDB ObjectId. Public endpoint.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDB ObjectId of the plot
+          example: "64f1a2b3c4d5e6f7a8b9c0d1"
+      responses:
+        '200':
+          description: Plot found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Plot'
+        '404':
+          description: Plot not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags: [Plots]
+      summary: Update a plot
+      description: Updates an existing plot by ID. Requires JWT authentication.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDB ObjectId of the plot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlotInput'
+      responses:
+        '200':
+          description: Plot updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Plot'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Plot not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [Plots]
+      summary: Delete a plot
+      description: Deletes a plot by ID. Requires JWT authentication.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDB ObjectId of the plot
+      responses:
+        '200':
+          description: Plot deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Plot deleted successfully."
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Plot not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # ── Banners ──────────────────────────────────────────────────
+  /api/banners:
+    get:
+      tags: [Banners]
+      summary: Get all banners
+      description: Returns all banners sorted by creation date. Public endpoint.
+      responses:
+        '200':
+          description: List of banners
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Banner'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags: [Banners]
+      summary: Create a new banner
+      description: |
+        Creates a new banner. Requires JWT authentication.
+        If `isActive` is true, all other banners are automatically deactivated.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BannerInput'
+      responses:
+        '201':
+          description: Banner created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Banner'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/banners/active:
+    get:
+      tags: [Banners]
+      summary: Get active banner
+      description: |
+        Returns the single currently active banner, or `null` if none is active.
+        Used by the landing page to render the banner between Hero and Why Choose Us.
+        Public endpoint.
+      responses:
+        '200':
+          description: Active banner or null
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/Banner'
+                      - type: 'null'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/banners/{id}:
+    get:
+      tags: [Banners]
+      summary: Get a single banner
+      description: Returns a single banner by MongoDB ObjectId. Public endpoint.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDB ObjectId of the banner
+      responses:
+        '200':
+          description: Banner found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Banner'
+        '404':
+          description: Banner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags: [Banners]
+      summary: Update a banner
+      description: |
+        Updates a banner by ID. Requires JWT authentication.
+        If `isActive` is set to true, all other banners are automatically deactivated.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDB ObjectId of the banner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BannerInput'
+      responses:
+        '200':
+          description: Banner updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    $ref: '#/components/schemas/Banner'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Banner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [Banners]
+      summary: Delete a banner
+      description: Deletes a banner by ID. Requires JWT authentication.
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDB ObjectId of the banner
+      responses:
+        '200':
+          description: Banner deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Banner deleted successfully."
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Banner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
