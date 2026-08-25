@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -54,9 +55,21 @@ export function Footer() {
           <p className="text-[0.85rem] m-0 leading-relaxed text-[var(--text-muted-softer)]"><a href="/careers" className="text-[var(--text-muted-softer)] transition-colors duration-200 hover:text-[var(--accent-cyan)]">Join our team</a></p>
         </div>
       </div>
-      <div className="footer-bottom flex flex-wrap gap-[10px] justify-between pt-[14px] text-[0.78rem] text-[var(--text-muted)]">
+      <div className="footer-bottom flex flex-wrap gap-[10px] justify-between items-center pt-[14px] text-[0.78rem] text-[var(--text-muted)]">
         <span>&copy; 2025 Bhoomi Group. All rights reserved.</span>
-        <span>Made with care for Indian real estate buyers.</span>
+        <div className="flex items-center gap-3">
+          <span>Made with care for Indian real estate buyers.</span>
+          <span className="text-[rgba(148,163,184,0.3)]">|</span>
+          <Link
+            href="/admin/login"
+            className="text-[var(--text-muted)] hover:text-[var(--accent-strong)] transition-colors duration-200 flex items-center gap-1.5"
+            title="Staff / Admin Portal"
+            id="footer-admin-link"
+          >
+            <i className="fas fa-lock text-[0.65rem]"></i>
+            <span>Admin</span>
+          </Link>
+        </div>
       </div>
     </footer>
   );

@@ -114,8 +114,7 @@ function ProjectsTabsContent() {
   useEffect(() => {
     async function fetchLivePlots() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-        const res = await fetch(`${apiUrl}/plots`, { cache: 'no-store' });
+        const res = await fetch('/api/plots', { cache: 'no-store' });
         const data = await res.json();
         if (data.success && Array.isArray(data.data) && data.data.length > 0) {
           const categorized: Record<Tab, Project[]> = {
@@ -134,6 +133,8 @@ function ProjectsTabsContent() {
                 image: item.imageUrl || `/projects/${cat === 'residential' ? 'residential' : cat === 'commercial' ? 'commercial' : cat === 'land' ? 'land' : 'plot'}.jpg`,
                 gallery: [item.imageUrl || '/projects/plot.jpg'],
                 price: item.price,
+                priceRange: item.priceRange || '',
+                bhk: item.bhk || '',
                 subPrice: 'Starting Price',
                 features: item.features || '',
                 description: item.description || '',
