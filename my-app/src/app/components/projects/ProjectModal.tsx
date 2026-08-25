@@ -9,13 +9,11 @@ interface ProjectModalProps {
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Collect all images (main image + gallery if exists)
   const allImages = [project.image];
   if (project.gallery && project.gallery.length > 0) {
     allImages.push(...project.gallery);
   }
 
-  // Prevent scrolling on body when modal is open
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -31,7 +29,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         onClick={onClose}
       ></div>
 
-      {/* Modal Container - Shorter and tighter */}
+      {/* Modal Container */}
       <div className="relative bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.5)] w-full max-w-[900px] h-auto max-h-[85vh] overflow-hidden flex flex-col md:flex-row transform transition-all animate-in fade-in zoom-in-95 duration-300">
         
         {/* Close Button */}
@@ -50,7 +48,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="w-full h-full object-cover transition-opacity duration-300 absolute inset-0"
           />
           
-          {/* Gallery Controls (if multiple images) */}
+          {/* Gallery Controls */}
           {allImages.length > 1 && (
             <>
               <button 
@@ -89,6 +87,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   Premium
                 </span>
               )}
+              {project.bhk && (
+                <span className="bg-white/90 text-[var(--text-dark-strong)] text-[0.65rem] font-bold px-2 py-0.5 rounded shadow-md">
+                  {project.bhk}
+                </span>
+              )}
             </div>
             <h2 className="text-2xl font-extrabold text-white leading-tight shadow-sm line-clamp-2">
               {project.title}
@@ -96,28 +99,38 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
         </div>
 
-        {/* Right: Details Content (Scrollable if needed) */}
+        {/* Right: Details Content */}
         <div className="w-full md:w-[55%] p-5 md:p-6 flex flex-col relative z-10 bg-white overflow-y-auto">
           
           {/* Header Row: Price & Location */}
           <div className="mb-4 pb-4 border-b border-slate-100 pt-1">
             <div className="text-[0.7rem] uppercase tracking-wider font-bold text-slate-400 mb-1">
-              Starting Price
+              {project.priceRange ? 'Price Range' : 'Starting Price'}
             </div>
             <div className="flex justify-between items-start">
               <div>
-                <div className="text-3xl font-black text-[var(--primary)] leading-none mb-1.5">
-                  {project.price}
+                <div className="text-2xl md:text-3xl font-black text-[var(--primary)] leading-none mb-1.5">
+                  {project.priceRange ? project.priceRange : project.price}
                 </div>
+                {project.priceRange && project.price && project.price !== project.priceRange && (
+                  <div className="text-[0.78rem] text-slate-500 font-semibold mb-1">
+                    Starts from {project.price}
+                  </div>
+                )}
                 <div className="text-[0.8rem] text-slate-500 flex items-center gap-1.5">
                   <i className="fas fa-map-marker-alt text-[var(--primary-soft)]"></i> 
                   {project.location}
                 </div>
               </div>
-              <div className="text-right shrink-0 mt-1">
+              <div className="text-right shrink-0 mt-1 flex flex-col items-end gap-1">
                  <div className="bg-[var(--primary)]/10 text-[var(--primary)] text-[0.7rem] font-bold px-2.5 py-1 rounded-md inline-block">
                   {project.status}
                  </div>
+                 {project.bhk && (
+                   <div className="bg-slate-100 text-slate-700 text-[0.68rem] font-semibold px-2 py-0.5 rounded">
+                     {project.bhk}
+                   </div>
+                 )}
               </div>
             </div>
           </div>
@@ -133,10 +146,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Features */}
           {project.features && (
             <div className="mb-5">
-              <h4 className="text-[0.85rem] font-bold text-[var(--text-dark)] mb-2">Key Details</h4>
+              <h4 className="text-[0.85rem] font-bold text-[var(--text-dark)] mb-2">Key Amenities &amp; Details</h4>
               <div className="flex flex-wrap gap-1.5">
                 {project.features.split('•').map((feature, i) => (
-                  <span key={i} className="text-[0.8rem] font-semibold text-[var(--text-dark)] bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 flex items-center gap-1.5">
+                  <span key={i} className="text-[0.78rem] font-semibold text-[var(--text-dark)] bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 flex items-center gap-1.5">
                     <i className="fas fa-check text-[var(--primary)] text-[0.65rem]"></i> {feature.trim()}
                   </span>
                 ))}
@@ -144,30 +157,27 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
           )}
 
-          {/* Developer & RERA */}
-          <div className="mt-auto pt-3 grid grid-cols-2 gap-3 mb-5">
-            <div>
-              <div className="text-[0.65rem] uppercase font-bold text-slate-400 mb-0.5">Developer</div>
-              <div className="text-[0.85rem] font-bold text-[var(--text-dark)] flex items-center gap-1">
-                {project.developer}
-                {project.developerVerified && <i className="fas fa-badge-check text-[var(--primary)] text-[0.7rem]"></i>}
+          {/* RERA and Verification */}
+          {project.reraNumber && (
+            <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between mb-4">
+              <div className="text-[0.75rem] text-slate-600 flex items-center gap-1.5">
+                <i className="fas fa-file-shield text-emerald-500 text-sm"></i>
+                <span>MahaRERA: <strong className="text-slate-800 font-mono">{project.reraNumber}</strong></span>
               </div>
+              <span className="text-[0.7rem] text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">
+                <i className="fas fa-check-circle"></i> Verified
+              </span>
             </div>
-            {project.reraNumber && (
-              <div>
-                <div className="text-[0.65rem] uppercase font-bold text-slate-400 mb-0.5">RERA Number</div>
-                <div className="text-[0.8rem] font-semibold text-slate-700 flex items-center gap-1">
-                  <i className="fas fa-file-shield text-emerald-500"></i> {project.reraNumber}
-                </div>
-              </div>
-            )}
-          </div>
+          )}
 
-          {/* Actions - Full width Enquire Now */}
+          {/* Actions */}
           <div className="flex gap-3">
-            <button className="flex-1 bg-[var(--primary)] text-white font-bold py-3 rounded-xl hover:bg-[var(--accent-strong)] transition-colors shadow-[0_4px_15px_rgba(197,138,35,0.3)] hover:shadow-[0_8px_20px_rgba(197,138,35,0.4)] text-[0.9rem]">
-              Enquire Now
-            </button>
+            <a
+              href="tel:+917083909008"
+              className="flex-1 bg-[var(--primary)] text-white font-bold py-3 rounded-xl hover:bg-[var(--primary-hover)] transition-colors shadow-[0_4px_15px_rgba(197,138,35,0.3)] hover:shadow-[0_8px_20px_rgba(197,138,35,0.4)] text-[0.9rem] text-center flex items-center justify-center gap-2"
+            >
+              <i className="fas fa-phone-alt text-xs"></i> Enquire Now
+            </a>
           </div>
 
         </div>

@@ -6,6 +6,7 @@ import { AuthModals } from '../components/AuthModals';
 import { Footer } from '../components/Footer';
 import { Hero } from '../components/ui/Hero';
 import { SuccessSection } from '../components/ui/SuccessSection';
+import { BannerAd } from '../components/ui/BannerAd';
 import { WhyChooseUs } from '../components/ui/WhyChooseUs';
 import { LatestWork } from '../components/ui/LatestWork';
 import { Testimonials } from '../components/ui/Testimonials';
@@ -32,13 +33,14 @@ export default function HomePage() {
       <Navbar />
       
       <main className="min-h-screen bg-slate-50">
-      <Hero />
-      <SuccessSection />
-      <WhyChooseUs />
-      <LatestWork />
-      <Testimonials />
-      <VideosFaq />
-      <AuthModals />
+        <Hero />
+        <SuccessSection />
+        <BannerAd />
+        <WhyChooseUs />
+        <LatestWork />
+        <Testimonials />
+        <VideosFaq />
+        <AuthModals />
       </main>
       <Footer />
     </>
