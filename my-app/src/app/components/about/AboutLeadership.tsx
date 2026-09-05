@@ -6,7 +6,7 @@ const leaders = [
     id: 'jagdish',
     name: 'Mr. Jagdish Thakur',
     role: 'Founder & MD',
-    image: '/assets/images/jagdish-thakur.jpg',
+    image: '/assets/images/JagdishThakur.png',
     imageStyle: { objectPosition: 'center top' },
     description: (
       <>
@@ -26,11 +26,8 @@ const leaders = [
     id: 'anand',
     name: 'Mr. Anand More',
     role: 'Founder & CEO',
-    image: '/assets/images/anand-more.png',
-    imageStyle: { 
-      objectPosition: 'left top', 
-      transform: 'scale(1.1) translate(-2%, 18%)' 
-    },
+    image: '/assets/images/AnandMore.png',
+    imageStyle: { objectPosition: 'center top' },
     description: (
       <>
         <p className="mb-4">
@@ -55,7 +52,7 @@ const leaders = [
     id: 'rohit',
     name: 'Mr. Rohit Kulkarni',
     role: 'Working Director',
-    image: '/assets/images/rohit-kulkarni.jpg',
+    image: '/assets/images/RohitKulkarni.png',
     imageStyle: { objectPosition: 'center top' },
     description: (
       <>
@@ -98,7 +95,7 @@ export function AboutLeadership() {
   return (
     <section className="px-[5%] md:px-[8%] py-16 md:py-24 bg-transparent relative">
       <div className="w-full max-w-[1200px] mx-auto flex flex-col items-center">
-        
+
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-dark-strong)] mb-4 tracking-tight uppercase tracking-[0.2em] text-[#cfa861]">
             Directors
@@ -109,20 +106,20 @@ export function AboutLeadership() {
         <div className="flex flex-col gap-12 md:gap-16 w-full">
           {leaders.map((leader, index) => {
             const isExpanded = expandedCards[leader.id];
-            
+
             return (
-              <div 
+              <div
                 key={leader.id}
                 className={`flex flex-col ${index % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 md:gap-12 items-start bg-white rounded-3xl p-6 md:p-10 pb-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] relative`}
               >
-                
+
                 {/* Image Container */}
                 <div className="w-full md:w-[35%] shrink-0 flex flex-col items-center md:items-start max-[900px]:text-center">
                   {leader.image ? (
                     <div className="w-full aspect-[4/5] max-w-[320px] rounded-[1.5rem] mb-6 md:mb-8 relative overflow-hidden bg-gradient-to-b from-slate-200 to-slate-300 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.15)] group border-[4px] border-white flex justify-center items-center">
-                      <img 
-                        src={leader.image} 
-                        alt={leader.name} 
+                      <img
+                        src={leader.image}
+                        alt={leader.name}
                         style={leader.imageStyle}
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                       />
@@ -134,7 +131,7 @@ export function AboutLeadership() {
                       <span className="text-sm font-medium">Image Placeholder</span>
                     </div>
                   )}
-                  
+
                   <div className="flex flex-col items-center md:items-start w-full">
                     <h3 className="text-2xl md:text-3xl font-bold text-[var(--primary)] mb-1.5 text-center md:text-left">
                       {leader.name}
@@ -146,18 +143,17 @@ export function AboutLeadership() {
                 </div>
 
                 {/* Text Description Content */}
-                <div 
-                  className={`w-full md:w-[65%] text-[0.95rem] md:text-[1rem] leading-relaxed text-[var(--text-body-muted)] flex flex-col text-justify max-[900px]:text-left md:pt-4 transition-all duration-500 ease-in-out ${
-                    isExpanded 
-                      ? 'max-[900px]:max-h-[1500px] max-[900px]:opacity-100 max-[900px]:pt-6 max-[900px]:pb-2' 
-                      : 'max-[900px]:max-h-0 max-[900px]:opacity-0 max-[900px]:overflow-hidden'
-                  }`}
+                <div
+                  className={`w-full md:w-[65%] text-[0.95rem] md:text-[1rem] leading-relaxed text-[var(--text-body-muted)] flex flex-col text-justify max-[900px]:text-left md:pt-4 transition-all duration-500 ease-in-out ${isExpanded
+                    ? 'max-[900px]:max-h-[1500px] max-[900px]:opacity-100 max-[900px]:pt-6 max-[900px]:pb-2'
+                    : 'max-[900px]:max-h-0 max-[900px]:opacity-0 max-[900px]:overflow-hidden'
+                    }`}
                 >
                   {leader.description}
                 </div>
 
                 {/* Mobile Read More Toggle Button */}
-                <button 
+                <button
                   onClick={() => toggleCard(leader.id)}
                   className="hidden max-[900px]:inline-flex absolute bottom-4 right-6 text-[var(--primary)] font-bold text-[0.9rem] items-center gap-1.5"
                 >
