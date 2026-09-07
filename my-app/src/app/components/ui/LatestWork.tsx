@@ -13,11 +13,11 @@ export function LatestWork() {
         <a href="/projects" className="block rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
           <div className="relative h-[220px] overflow-hidden">
             <img src="/assets/images/cenator-west.jpg" alt="Cenator West" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Commercial</span>
+            <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Residential + Commercial</span>
           </div>
           <div className="p-5">
-            <h3 className="text-base font-bold mb-1 text-[#0f172a]">Cenator West</h3>
-            <p className="text-[0.85rem] text-slate-500">Pune</p>
+            <h3 className="text-base font-bold mb-1 text-[#0f172a]">Central Vista</h3>
+            <p className="text-[0.85rem] text-slate-500">Nashik</p>
           </div>
         </a>
 
@@ -29,7 +29,7 @@ export function LatestWork() {
           </div>
           <div className="p-5">
             <h3 className="text-base font-bold mb-1 text-[#0f172a]">Samarth Sky</h3>
-            <p className="text-[0.85rem] text-slate-500">Pune</p>
+            <p className="text-[0.85rem] text-slate-500">Nashik</p>
           </div>
         </a>
 
@@ -40,8 +40,8 @@ export function LatestWork() {
             <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Plots</span>
           </div>
           <div className="p-5">
-            <h3 className="text-base font-bold mb-1 text-[#0f172a]">Begaon Plots</h3>
-            <p className="text-[0.85rem] text-slate-500">Hinjewadi, Pune</p>
+            <h3 className="text-base font-bold mb-1 text-[#0f172a]">Belgaon Dhaga</h3>
+            <p className="text-[0.85rem] text-slate-500">Trimbakeshwar Road, Nashik</p>
           </div>
         </a>
 
@@ -49,11 +49,11 @@ export function LatestWork() {
         <a href="/projects" className="block rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
           <div className="relative h-[220px] overflow-hidden">
             <img src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=600&q=80" alt="Plots project" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Plots &amp; Land</span>
+            <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Land</span>
           </div>
           <div className="p-5">
             <h3 className="text-base font-bold mb-1 text-[#0f172a]">Green Valley Plots</h3>
-            <p className="text-[0.85rem] text-slate-500">Wagholi, Pune</p>
+            <p className="text-[0.85rem] text-slate-500">Nashik</p>
           </div>
         </a>
       </div>
