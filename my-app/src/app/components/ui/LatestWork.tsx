@@ -37,10 +37,10 @@ export function LatestWork() {
         <a href="/projects" className="block rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md group">
           <div className="relative h-[220px] overflow-hidden">
             <img src="/assets/images/plot.jpg" alt="Villa project" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Villas</span>
+            <span className="absolute top-4 left-4 text-[0.75rem] font-bold tracking-wide px-3 py-1.5 rounded-lg bg-[#22d3ee] text-[#0f172a] shadow-sm">Plots</span>
           </div>
           <div className="p-5">
-            <h3 className="text-base font-bold mb-1 text-[#0f172a]">Riverside Villas</h3>
+            <h3 className="text-base font-bold mb-1 text-[#0f172a]">Begaon Plots</h3>
             <p className="text-[0.85rem] text-slate-500">Hinjewadi, Pune</p>
           </div>
         </a>
