@@ -13,8 +13,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bhoomi Group",
-  description: "Real Estate in India",
+  title: "Bhoomi Plots | Premium Real Estate & Land Investment in India",
+  description: "Discover premium residential and commercial plots with Bhoomi Plots. Your trusted partner for real estate investment and land buying in India. Explore our projects now.",
+  keywords: [
+    "bhoomi plots", "bhoomi group", "buy plots in india", "residential plots", 
+    "commercial plots", "real estate india", "land for sale", "premium plots", 
+    "property investment", "NA plots", "buy land", "real estate developers"
+  ],
+  authors: [{ name: "Bhoomi Group" }],
+  openGraph: {
+    title: "Bhoomi Plots | Premium Real Estate & Land Investment in India",
+    description: "Discover premium residential and commercial plots with Bhoomi Plots. Your trusted partner for real estate investment and land buying in India.",
+    url: "https://www.bhoomiplots.com",
+    siteName: "Bhoomi Plots",
+    images: [
+      {
+        url: "/assets/images/bhoomi-logo-white-1-1536x526.png",
+        width: 1536,
+        height: 526,
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
   icons: {
     icon: "/assets/images/bhoomi-logo-white-1-1536x526.png",
   },
