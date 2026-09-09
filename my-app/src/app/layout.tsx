@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/assets/images/bhoomi-logo-white-1-1536x526.png",
+    icon: "/assets/images/favicon.png",
   },
 };
 
