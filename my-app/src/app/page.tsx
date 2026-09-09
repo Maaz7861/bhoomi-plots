@@ -1,5 +1,48 @@
-import { redirect } from 'next/navigation';
+"use client";
+import React, { useEffect } from 'react';
 
-export default function RootPage() {
-  redirect('/Home');
+import { Navbar } from './components/Navbar';
+import { AuthModals } from './components/AuthModals';
+import { Footer } from './components/Footer';
+import { Hero } from './components/ui/Hero';
+import { SuccessSection } from './components/ui/SuccessSection';
+import { BannerAd } from './components/ui/BannerAd';
+import { WhyChooseUs } from './components/ui/WhyChooseUs';
+import { LatestWork } from './components/ui/LatestWork';
+import { Testimonials } from './components/ui/Testimonials';
+import { VideosFaq } from './components/ui/VideosFaq';
+
+export default function HomePage() {
+  useEffect(() => {
+    // Load original script.js to preserve all interactive behaviour
+    // (navbar toggle, FAQ accordion, testimonials carousel, social popup, etc.)
+    const script = document.createElement('script');
+    script.src = '/assets/js/script.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      <Navbar />
+      
+      <main className="min-h-screen bg-slate-50">
+        <Hero />
+        <SuccessSection />
+        <BannerAd />
+        <WhyChooseUs />
+        <LatestWork />
+        <Testimonials />
+        <VideosFaq />
+        <AuthModals />
+      </main>
+      <Footer />
+    </>
+  );
 }
