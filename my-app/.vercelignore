@@ -1,0 +1,10 @@
+node_modules
+.next
+.vercel
+.env*
+test-results
+playwright-report
+blob-report
+playwright
+tests/**/*.png
+*.tsbuildinfo
