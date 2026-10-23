@@ -1,0 +1,267 @@
+# MASTER PROMPT: BhoomiPlots Production CDN Traffic, Bot Activity & Vercel Usage Root-Cause Audit
+
+You have access to the BhoomiPlots project source code, deployment configuration, and available production/deployment tools. Your task is to conduct a thorough, evidence-based audit to determine why the website is receiving a high number of CDN/Edge Requests and why the Vercel Hobby plan fair-use limit has been exceeded.
+
+## IMPORTANT: AUDIT FIRST — DO NOT MODIFY ANYTHING
+
+Start with investigation and diagnosis only.
+
+Do not edit source files, change configurations, create deployments, pause/resume deployments, modify DNS, change firewall rules, block bots, or make production changes during this audit.
+
+Do not assume the cause based on dashboard screenshots alone. Inspect the available evidence and distinguish confirmed findings from hypotheses. If access to any required logs or dashboards is unavailable, state that limitation explicitly.
+
+## 1. Production Incident Context
+
+The Vercel project is named `bhoomi-plots` under the CrownCo team.
+
+The provided Vercel Observability screenshots show:
+
+- Environment: Production.
+- CDN Requests dashboard time range: Last 6 hours.
+- Googlebot: approximately 23K requests.
+- Other listed bots include bingbot, facebookexternalhit, oai-searchbot, gpt-actions, exasearchbot and chrome-privacy-preserving-prefetch-proxy.
+- Listed route examples and counts include:
+  - `/wp-includes/revial.php` — 107 requests.
+  - `/robots.txt` — 43 requests.
+  - `/` — 39 requests.
+  - `/wp-header.php` — 32 requests.
+  - `/favicon.ico` — 20 requests.
+  - `/.git/config` — 7 requests.
+  - Multiple `/products/detail/<ID>/` routes with a few requests each.
+- The displayed Cached percentage is 0% for the listed bots and routes.
+- Vercel displays a deployment-paused notice stating that the Hobby plan's Edge Requests fair-use limits were exceeded. The notice shows a pause date of October 22, 2026, and an indicated end date of November 21, 2026.
+
+These are observations from screenshots, not independently verified log records. Validate them against available live data.
+
+## 2. Establish the Actual Traffic Baseline
+
+Inspect the Vercel project's available usage metrics, observability data, request logs, deployment history and relevant billing-period reports.
+
+Determine:
+
+1. Total CDN/Edge Requests for the current billing period.
+2. Requests per hour and per day, if available.
+3. The time at which traffic increased.
+4. Whether the increase is concentrated in a particular route, bot, IP address, user agent, deployment, or geographic region.
+5. The difference between the six-hour snapshot and the full billing-period usage.
+6. Which requests contribute to the usage metric that triggered the pause.
+7. Whether the displayed 23K Googlebot requests are actual individual requests, aggregated requests, or another dashboard representation.
+8. Whether repeated browser requests, crawlers, monitoring systems, link preview bots, prefetching or other automated clients contribute significantly.
+
+Create a baseline table with metric, observed value, time range, source, and confidence.
+
+Do not extrapolate six-hour traffic into a monthly total without clearly labeling the calculation as an estimate.
+
+## 3. Audit Googlebot and Other Crawlers
+
+Investigate why Googlebot accounts for approximately 23K requests in six hours.
+
+Inspect:
+
+- `robots.txt` and sitemap files, including sitemap index files and all referenced sitemaps.
+- Canonical URL configuration.
+- Metadata and indexing directives.
+- Internal linking and navigation patterns.
+- Pagination, filters, sorting, search URLs and query parameters.
+- Duplicate URLs, trailing-slash inconsistencies, uppercase/lowercase variants and URL normalization.
+- Product/project detail routes and any generated URL patterns.
+- Redirect chains, redirect loops and unnecessary URL variants.
+- Dynamic route generation, static generation, server-side rendering and revalidation behavior.
+- Whether the site generates effectively unlimited crawlable URLs.
+- Whether the sitemap contains valid, unique, canonical URLs.
+- Whether crawler traffic repeatedly requests nonexistent or redirected URLs.
+- Whether the website exposes crawlable URLs through internal links that should not be indexed.
+
+Verify crawler identity using trustworthy evidence wherever available. Do not trust a user-agent string alone. If IP verification or reverse/forward DNS verification is required but unavailable, report that verification is incomplete.
+
+Differentiate Googlebot from spoofed Googlebot traffic.
+
+Also evaluate bingbot and the other observed bots. Do not assume every unfamiliar bot is malicious.
+
+Report the top crawl targets, request patterns, suspected cause and supporting evidence.
+
+## 4. Investigate Suspicious Paths and Security Exposure
+
+Specifically investigate:
+
+- `/wp-includes/revial.php`
+- `/wp-header.php`
+- `/.git/config`
+- Other requests containing common WordPress, PHP, backup, environment-file, repository or administrative paths.
+
+Check:
+
+- HTTP status codes and response sizes, if available.
+- Whether these paths are handled by application routes, rewrites, middleware or catch-all handlers.
+- Whether requests return genuine 404/410 responses or unexpected content.
+- Whether any response could expose secrets, environment variables, source files, repository data, stack traces or internal information.
+- Whether any matching files, rewrites, middleware rules or dependencies exist in the source code.
+- Whether any suspicious request reaches an expensive serverless function or external service.
+- Whether the project has evidence of a successful exploit.
+
+Do not conclude that the project is compromised merely because scanners request suspicious paths.
+
+Never print secret values or credentials in your report. Redact tokens, API keys, cookies and sensitive identifiers.
+
+If evidence of a real exposure or compromise is discovered, clearly identify its severity and recommend safe containment steps without executing changes.
+
+## 5. Audit CDN Caching and Request Amplification
+
+The screenshots show 0% Cached for the listed entries. Determine what this actually means for the relevant Vercel metric.
+
+Inspect:
+
+- Cache-Control and CDN-related response headers.
+- `s-maxage`, `stale-while-revalidate` and other relevant cache directives.
+- Dynamic rendering and route configuration.
+- Server components, API routes, route handlers and middleware.
+- Cookies, authorization headers and query parameters that could affect cacheability.
+- Cache bypass rules and custom rewrites.
+- Static assets such as images, fonts, CSS and JavaScript.
+- ISR/revalidation behavior and cache invalidation patterns.
+- Whether requests trigger expensive rendering, database calls, external APIs or image transformations.
+- Whether the same resources are fetched repeatedly without appropriate caching.
+- Whether any request paths produce excessive redirects or repeated internal processing.
+
+Identify which responses are safe to cache and which must remain dynamic or private.
+
+Do not recommend publicly caching authenticated, personalized, sensitive or user-specific responses. Do not change cache policies during this audit.
+
+Quantify the possible savings only when supported by real measurements. Clearly distinguish measured savings from modeled estimates.
+
+## 6. Audit Application Architecture and Source Code
+
+Inspect the repository and identify the actual framework, routing structure and deployment architecture.
+
+Review relevant files, including where present:
+
+- `package.json` and lockfiles.
+- Next.js configuration or the equivalent framework configuration.
+- `vercel.json`.
+- `middleware.ts` / `middleware.js` or proxy equivalents.
+- `robots.txt`, sitemap generation code and metadata configuration.
+- Route handlers, API endpoints, server actions and catch-all routes.
+- Product/project listing and detail pages.
+- Image optimization configuration.
+- Redirect and rewrite rules.
+- Cron jobs, scheduled tasks and external integrations.
+- Analytics, monitoring, prefetching and third-party scripts.
+
+Look for:
+
+- Unnecessary dynamic rendering.
+- Expensive middleware executing on every request.
+- Broad matchers that include assets or irrelevant paths.
+- Unbounded database queries or external API calls.
+- Unnecessary redirects.
+- Broken canonicalization.
+- Infinite or combinatorial route generation.
+- Repeated image transformations.
+- Excessive polling or request loops.
+- Client/server request duplication.
+- Any code that could multiply one visit into many requests.
+
+For every confirmed issue, provide the exact file path, relevant function or configuration, and line numbers where available.
+
+Do not invent source-code findings if the relevant file or logs cannot be accessed.
+
+## 7. Investigate Vercel Usage and Deployment Pause
+
+Using the available Vercel project/team usage data and deployment information, establish:
+
+- The precise usage metric that exceeded the Hobby plan's applicable limit.
+- The relevant billing period and limit, where accessible.
+- The actual usage compared with the limit.
+- The timing and reason for the pause.
+- Whether CDN traffic is the primary contributor or only one of several possible contributors.
+- Whether build activity, functions, image optimization, ISR, middleware or other services also have relevant usage implications.
+- Whether any deployment failure, pause, or configuration change coincided with the traffic spike.
+
+Do not assume that 23K requests alone caused the pause. Establish the relationship using the applicable usage data.
+
+If exact billing information is inaccessible, state what evidence is needed to establish it.
+
+## 8. Identify Root Causes and Rank Findings
+
+Produce a prioritized findings table with:
+
+- Finding ID.
+- Severity: Critical / High / Medium / Low / Informational.
+- Confirmed issue or unverified hypothesis.
+- Root cause.
+- Supporting evidence and source.
+- Affected routes or components.
+- Impact on CDN/Edge Requests.
+- Potential impact on SEO, users, security and operating cost.
+- Recommended corrective action.
+- Confidence level.
+- How to verify the fix.
+
+Rank findings by demonstrated impact, not speculation.
+
+Explicitly distinguish:
+- Confirmed root causes.
+- Likely causes needing more evidence.
+- Normal behavior that should not be changed.
+- Unrelated findings that do not explain the request spike.
+
+## 9. Develop a Safe Remediation Plan
+
+After completing the audit, propose a staged plan, but do not execute it.
+
+Stage A — Immediate risk reduction:
+- Safe handling of obviously invalid scanner paths.
+- Identification of verified versus unverified crawler traffic.
+- Protection against demonstrated security exposures.
+- Avoiding indiscriminate blocking of legitimate search engines.
+
+Stage B — Request reduction:
+- Correct sitemap and canonical configuration.
+- Removal of duplicate or unbounded crawlable URLs.
+- Route and middleware optimization.
+- Appropriate caching for safe public responses.
+- Reduction of unnecessary redirects and repeated processing.
+
+Stage C — Long-term prevention:
+- Usage monitoring and alerting.
+- Crawl-rate and request-pattern monitoring.
+- Regression tests for routing and caching.
+- Documentation of production usage limits.
+- A measurable baseline for future traffic.
+
+For every proposed fix, state the expected outcome, potential risks, validation method and rollback approach.
+
+Do not promise a specific percentage of savings without measured evidence.
+
+## 10. Required Final Report
+
+Deliver the report in this exact order:
+
+1. Executive Summary — explain the incident in simple language.
+2. What Is Confirmed vs What Is Still Unknown.
+3. Traffic Baseline — include a table of actual metrics and time windows.
+4. Top Request Sources, Bots and Routes.
+5. Googlebot and SEO Crawl Audit.
+6. Suspicious Path and Security Audit.
+7. CDN Cache and Request Amplification Audit.
+8. Source-Code Findings — exact file paths and line references.
+9. Vercel Usage and Deployment Pause Analysis.
+10. Root-Cause Findings — prioritized table with evidence and confidence.
+11. Recommended Remediation Plan — ordered by priority.
+12. Validation and Rollback Checklist.
+13. Access or Evidence Still Needed.
+
+For each unavailable data source, explain exactly which dashboard, log, permission or configuration is required to finish that part of the audit.
+
+## Final Rules
+
+- Be evidence-driven, technically precise and explicit about uncertainty.
+- Inspect the actual project instead of giving generic recommendations.
+- Cite file paths, line numbers, logs and dashboard metrics wherever possible.
+- Do not fabricate metrics, logs, IP addresses, source-code lines or root causes.
+- Do not expose credentials or secrets.
+- Do not modify production or repository state.
+- Do not deploy, commit, push, block, delete or change any configuration.
+- Finish with the three most important confirmed findings and the next safest actions.
+
+The objective is to determine WHY BhoomiPlots is receiving these requests, WHICH requests are unnecessary or harmful, WHETHER any security exposure exists, and HOW to reduce unnecessary traffic and Vercel usage without harming legitimate visitors or search-engine indexing.
