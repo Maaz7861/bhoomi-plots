@@ -126,7 +126,7 @@ export function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         <div className="sidebar-footer">
           {/* Visit Public Site */}
           <Link
-            href="/Home"
+            href="/"
             className="sidebar-link"
             style={{ marginBottom: "4px" }}
             onClick={onClose}

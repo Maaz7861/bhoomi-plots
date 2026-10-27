@@ -52,7 +52,7 @@ export function Topbar({ title, breadcrumb, onMenuToggle }: TopbarProps) {
 
         {/* Live Site Link */}
         <a
-          href="/Home"
+          href="/"
           target="_blank"
           rel="noopener noreferrer"
           className="topbar-icon-btn"

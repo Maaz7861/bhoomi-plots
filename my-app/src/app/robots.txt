@@ -1,0 +1,11 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/auth/
+Disallow: /api/upload
+Disallow: /products/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /wp-json/
+Disallow: /*.php$
