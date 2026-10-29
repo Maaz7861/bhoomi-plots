@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" width="480" height="360" role="img" aria-label="Image coming soon">
+  <rect width="480" height="360" fill="#dcdcdc"/>
+  <g fill="#9a9a9a">
+    <rect x="280" y="112" width="34" height="48"/>
+    <path d="M240 98 L138 168 H170 V258 H310 V168 H342 Z"/>
+  </g>
+  <g fill="#dcdcdc">
+    <rect x="187" y="190" width="38" height="68"/>
+    <rect x="240" y="192" width="60" height="34" rx="2"/>
+  </g>
+  <rect x="140" y="256" width="200" height="8" fill="#9a9a9a"/>
+</svg>
