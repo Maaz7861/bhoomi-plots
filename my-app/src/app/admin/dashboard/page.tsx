@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Topbar } from "../components/Topbar";
 import Link from "next/link";
-import { getPlots, getBanners, PlotData, BannerData } from "@/lib/api";
+import { getPlots, getBanners, getInquiries, PlotData, BannerData, InquiryData } from "@/lib/api";
 
 const categoryChipClass: Record<string, string> = {
   plots: "chip chip-plots",
@@ -14,18 +14,21 @@ const categoryChipClass: Record<string, string> = {
 export default function DashboardPage() {
   const [plots, setPlots] = useState<PlotData[]>([]);
   const [banners, setBanners] = useState<BannerData[]>([]);
+  const [inquiries, setInquiries] = useState<InquiryData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadData() {
       try {
         setLoading(true);
-        const [plotsData, bannersData] = await Promise.all([
+        const [plotsData, bannersData, inquiriesData] = await Promise.all([
           getPlots().catch(() => []),
           getBanners().catch(() => []),
+          getInquiries().catch(() => []),
         ]);
         setPlots(plotsData);
         setBanners(bannersData);
+        setInquiries(inquiriesData);
       } finally {
         setLoading(false);
       }
@@ -37,10 +40,12 @@ export default function DashboardPage() {
   const activeBanners = banners.filter((b) => b.isActive).length;
   const featuredPlots = plots.filter((p) => p.isFeatured).length;
   const uniqueCategories = new Set(plots.map((p) => p.category)).size;
+  const newInquiries = inquiries.filter((i) => i.status === "new").length;
 
   const stats = [
     { id: "total-plots", label: "Total Plots", value: loading ? "..." : String(totalPlots), icon: "fa-layer-group", iconBg: "#fef3c7", iconColor: "#92400e", change: `${totalPlots} in DB`, changeDir: "up" },
     { id: "active-banners", label: "Active Banners", value: loading ? "..." : String(activeBanners), icon: "fa-rectangle-ad", iconBg: "#ede9fe", iconColor: "#6d28d9", change: activeBanners > 0 ? "Live on site" : "None active", changeDir: activeBanners > 0 ? "up" : "down" },
+    { id: "new-inquiries", label: "New Inquiries", value: loading ? "..." : String(newInquiries), icon: "fa-inbox", iconBg: "#fee2e2", iconColor: "#b91c1c", change: `${inquiries.length} total`, changeDir: newInquiries > 0 ? "up" : "down" },
     { id: "plots-featured", label: "Featured", value: loading ? "..." : String(featuredPlots), icon: "fa-crown", iconBg: "rgba(197,138,35,0.1)", iconColor: "#c58a23", change: "Highlighted", changeDir: "up" },
     { id: "categories", label: "Categories", value: loading ? "..." : String(uniqueCategories || 3), icon: "fa-tag", iconBg: "#f0fdf4", iconColor: "#15803d", change: "Res, Plots, Land", changeDir: "up" },
   ];

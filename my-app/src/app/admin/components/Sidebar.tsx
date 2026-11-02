@@ -36,6 +36,12 @@ const navSections: NavSection[] = [
     ],
   },
   {
+    label: "Leads",
+    items: [
+      { href: "/admin/dashboard/inquiries", icon: "fa-inbox", label: "Inquiries", badge: null },
+    ],
+  },
+  {
     label: "Settings",
     items: [
       { href: "/admin/dashboard/settings", icon: "fa-gear", label: "Settings" },

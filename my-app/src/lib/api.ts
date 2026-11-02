@@ -206,6 +206,76 @@ export async function deleteBanner(id: string): Promise<void> {
   }
 }
 
+// ── Inquiries API ─────────────────────────────────────────────
+
+export type InquiryStatus = 'new' | 'contacted' | 'closed';
+
+export interface InquiryData {
+  _id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  interest?: string;
+  message?: string;
+  status: InquiryStatus;
+  createdAt: string;
+}
+
+export interface InquiryPayload {
+  name: string;
+  phone: string;
+  email?: string;
+  interest?: string;
+  message?: string;
+  website?: string;
+}
+
+/** Public — used by the Contact page form. */
+export async function submitInquiry(payload: InquiryPayload): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/inquiries`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Could not send your inquiry. Please try again.');
+  }
+}
+
+export async function getInquiries(): Promise<InquiryData[]> {
+  const res = await fetch(`${API_BASE_URL}/inquiries`, { headers: getAuthHeaders(), cache: 'no-store' });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Failed to fetch inquiries.');
+  }
+  return data.data || [];
+}
+
+export async function updateInquiryStatus(id: string, status: InquiryStatus): Promise<InquiryData> {
+  const res = await fetch(`${API_BASE_URL}/inquiries/${id}`, {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ status }),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Failed to update inquiry.');
+  }
+  return data.data;
+}
+
+export async function deleteInquiry(id: string): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/inquiries/${id}`, {
+    method: 'DELETE',
+    headers: getAuthHeaders(),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Failed to delete inquiry.');
+  }
+}
+
 // ── Upload API ────────────────────────────────────────────────
 
 export async function uploadImageFile(file: File): Promise<string> {
