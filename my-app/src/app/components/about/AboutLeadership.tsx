@@ -6,7 +6,7 @@ const leaders = [
     id: 'jagdish',
     name: 'Mr. Jagdish Thakur',
     role: 'Founder & MD',
-    image: '/assets/images/JagdishThakur.png',
+    image: '/assets/images/jagdish sir.png',
     imageStyle: { objectPosition: 'center top' },
     description: (
       <>
