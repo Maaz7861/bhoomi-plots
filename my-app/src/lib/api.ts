@@ -276,6 +276,78 @@ export async function deleteInquiry(id: string): Promise<void> {
   }
 }
 
+// ── Candidates API (Careers page profiles) ────────────────────
+
+export type CandidateStatus = 'new' | 'shortlisted' | 'contacted' | 'rejected';
+
+export interface CandidateData {
+  _id: string;
+  name: string;
+  email?: string;
+  phone: string;
+  location?: string;
+  role?: string;
+  profile?: string;
+  status: CandidateStatus;
+  createdAt: string;
+}
+
+export interface CandidatePayload {
+  name: string;
+  email?: string;
+  phone: string;
+  location?: string;
+  role?: string;
+  profile?: string;
+  website?: string;
+}
+
+/** Public — used by the Careers page form. */
+export async function submitCandidate(payload: CandidatePayload): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/candidates`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Could not submit your profile. Please try again.');
+  }
+}
+
+export async function getCandidates(): Promise<CandidateData[]> {
+  const res = await fetch(`${API_BASE_URL}/candidates`, { headers: getAuthHeaders(), cache: 'no-store' });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Failed to fetch candidates.');
+  }
+  return data.data || [];
+}
+
+export async function updateCandidateStatus(id: string, status: CandidateStatus): Promise<CandidateData> {
+  const res = await fetch(`${API_BASE_URL}/candidates/${id}`, {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    body: JSON.stringify({ status }),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Failed to update candidate.');
+  }
+  return data.data;
+}
+
+export async function deleteCandidate(id: string): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/candidates/${id}`, {
+    method: 'DELETE',
+    headers: getAuthHeaders(),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || 'Failed to delete candidate.');
+  }
+}
+
 // ── Upload API ────────────────────────────────────────────────
 
 export async function uploadImageFile(file: File): Promise<string> {

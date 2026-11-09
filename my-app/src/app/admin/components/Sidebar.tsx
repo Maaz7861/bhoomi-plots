@@ -42,6 +42,12 @@ const navSections: NavSection[] = [
     ],
   },
   {
+    label: "Hiring",
+    items: [
+      { href: "/admin/dashboard/talent-pool", icon: "fa-user-tie", label: "Talent Pool", badge: null },
+    ],
+  },
+  {
     label: "Settings",
     items: [
       { href: "/admin/dashboard/settings", icon: "fa-gear", label: "Settings" },
