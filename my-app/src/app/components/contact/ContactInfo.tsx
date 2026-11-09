@@ -43,8 +43,8 @@ export function ContactInfo() {
           <div>
             <h3 className="text-[0.65rem] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-0.5">Email</h3>
             <p className="text-[var(--text-dark-strong)] font-semibold text-[0.85rem] break-all">
-              <a href="mailto:bhoomiplots1@gmail.com" className="hover:text-[var(--primary)] transition-colors">
-                bhoomiplots1@gmail.com
+              <a href="mailto:admin@bhoomiplots.com" className="hover:text-[var(--primary)] transition-colors">
+                admin@bhoomiplots.com
               </a>
             </p>
           </div>

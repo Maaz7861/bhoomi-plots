@@ -31,7 +31,7 @@ export function Footer() {
         <div className="footer-col flex flex-col">
           <h4 className="text-[0.95rem] font-bold mb-3 text-[var(--accent)]">Contact Us</h4>
           <p className="text-[0.85rem] m-0 leading-relaxed text-[var(--text-muted-softer)] mb-[10px]"><a href="tel:+917083909008" className="text-[var(--text-muted-softer)] transition-colors duration-200 hover:text-[var(--accent-cyan)]">7083909008</a></p>
-          <p className="text-[0.85rem] m-0 leading-relaxed text-[var(--text-muted-softer)]"><a href="mailto:bhoomiplots1@gmail.com" className="text-[var(--text-muted-softer)] transition-colors duration-200 hover:text-[var(--accent-cyan)]">bhoomiplots1@gmail.com</a></p>
+          <p className="text-[0.85rem] m-0 leading-relaxed text-[var(--text-muted-softer)]"><a href="mailto:admin@bhoomiplots.com" className="text-[var(--text-muted-softer)] transition-colors duration-200 hover:text-[var(--accent-cyan)]">admin@bhoomiplots.com</a></p>
           <div className="footer-social flex gap-3 mt-[14px]">
             <a href="https://www.instagram.com/bhoomigroup15/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 rounded-full flex items-center justify-center text-base bg-[rgba(0,194,255,0.2)] text-[var(--accent-strong)] transition-all duration-200 hover:-translate-y-[2px] hover:bg-[var(--accent-strong)] hover:text-[var(--bg-dark)]">
               <i className="fab fa-instagram"></i>
